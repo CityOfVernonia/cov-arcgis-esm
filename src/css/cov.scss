@@ -1,0 +1,8 @@
+@import "./../../node_modules/@arcgis/core/assets/esri/themes/base/color";
+
+a {
+  color: $interactive-font-color;
+  &:hover {
+    color: $interactive-font-color--hover;
+  }
+}

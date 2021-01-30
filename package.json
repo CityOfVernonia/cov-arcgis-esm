@@ -1,0 +1,98 @@
+{
+  "name": "cov-arcgis-esm",
+  "version": "0.0.1",
+  "description": "City of Vernonia widgets and friends for Esri JavaScript API in ESM.",
+  "scripts": {
+    "lint": "eslint . --ext .js,.ts,.tsx",
+    "prettier": "prettier --write \"src/**/*.ts?(x)\"",
+    "test": "npm run prettier && npm run lint && jest && npx tsc && npx node-sass src/css/cov.scss > dist/cov.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CityOfVernonia/cov-arcgis-esm.git"
+  },
+  "keywords": [
+    "arcgis",
+    "js",
+    "esm",
+    "vernonia"
+  ],
+  "author": "COV-GIS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CityOfVernonia/cov-arcgis-esm/issues"
+  },
+  "homepage": "https://github.com/CityOfVernonia/cov-arcgis-esm#readme",
+  "dependencies": {
+    "@arcgis/core": "^4.18.1",
+    "@esri/calcite-ui-icons": "^3.14.6",
+    "js-cookie": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/js-cookie": "^2.2.6",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "jest": "^26.6.3",
+    "node-sass": "^5.0.0",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.5.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "ignorePatterns": [
+      "*.d.ts",
+      "dist/"
+    ],
+    "rules": {
+      "@typescript-eslint/no-empty-function": 0,
+      "@typescript-eslint/ban-ts-comment": 1,
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_|^h"
+        }
+      ]
+    },
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "prettier/@typescript-eslint",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ]
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120,
+    "tabWidth": 2
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testMatch": [
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    }
+  }
+}
