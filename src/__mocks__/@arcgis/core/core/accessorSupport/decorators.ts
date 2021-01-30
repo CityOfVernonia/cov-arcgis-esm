@@ -1,2 +1,2 @@
-export const property = () => {};
-export const subclass = () => {};
+export const property = (): void => {};
+export const subclass = (): void => {};

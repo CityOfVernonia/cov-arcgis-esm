@@ -1,11 +1,13 @@
 import esri = __esri;
 
+type HashMapMap<T> = Record<string, T>;
+
 declare namespace __cov {
   /**
    * View models.
    */
 
-  // cov.viewModels.OAuthViewModel
+  // cov/viewModels/OAuthViewModel
   export interface OAuthViewModelProperties extends Object {
     /**
      * esri.portal.Portal instance to sign into.
@@ -36,5 +38,64 @@ declare namespace __cov {
     load(): Promise<boolean>;
     signIn(): void;
     signOut(): void;
+  }
+
+  // cov/viewModels/UnitsViewModel
+  export interface UnitsViewModelProperties extends Object {
+    /**
+     * CSS class string for <select>s.
+     *
+     * @default 'esri-select'
+     */
+    selectClass?: string;
+    /**
+     * Current location unit.
+     */
+    locationUnit?: string;
+    /**
+     * Available location unit and display text key/value pairs.
+     */
+    locationUnits?: HashMap<string>;
+    /**
+     * Current length unit.
+     */
+    lengthUnit?: esri.LinearUnits;
+    /**
+     * Available length unit and display text key/value pairs.
+     */
+    lengthUnits?: HashMap<string>;
+    /**
+     * Current area unit.
+     */
+    areaUnit?: esri.ArealUnits;
+    /**
+     * Available area unit and display text key/value pairs.
+     */
+    areaUnits?: HashMap<string>;
+    /**
+     * Current elevation unit.
+     */
+    elevationUnit?: string;
+    /**
+     * Available elevation unit and display text key/value pairs.
+     */
+    elevationUnits?: HashMap<string>;
+  }
+
+  export class UnitsViewModel extends esri.Accessor {
+    constructor(properties?: UnitsViewModelProperties);
+    selectClass: string;
+    locationUnit: string;
+    locationUnits: HashMap<string>;
+    lengthUnit: esri.LinearUnits;
+    lengthUnits: HashMap<string>;
+    areaUnit: esri.ArealUnits;
+    areaUnits: HashMap<string>;
+    elevationUnit: string;
+    elevationUnits: HashMap<string>;
+    locationSelect(name?: null | string, title?: null | string): tsx.JSX.Element;
+    lengthSelect(name?: null | string, title?: null | string): tsx.JSX.Element;
+    areaSelect(name?: null | string, title?: null | string): tsx.JSX.Element;
+    elevationSelect(name?: null | string, title?: null | string): tsx.JSX.Element;
   }
 }

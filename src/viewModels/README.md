@@ -2,7 +2,7 @@
 
 Resubale logic modules. See [interfaces.d.ts](./../interfaces.d.ts) for properties and methods.
 
-### `cov/viewModels/OAuthViewModel`
+#### `cov/viewModels/OAuthViewModel`
 
 A view model for handling OAuth and signing in and out of applications.
 
@@ -30,3 +30,7 @@ portal.load()
       });
   });
 ```
+
+#### `cov/viewModels/UnitsViewModel`
+
+A view model for managing location, length, area and elevation units and providing utility methods for returning unit `<select>`s.
