@@ -1,7 +1,10 @@
 # cov-arcgis-esm
 
+[![npm version][npm-img]][npm-url]
 [![build status][travis-img]][travis-url]
 
+[npm-img]: https://img.shields.io/npm/v/cov-arcgis-esm.svg?style=flat-square&color=success
+[npm-url]: https://www.npmjs.com/package/cov-arcgis-esm
 [travis-img]: https://img.shields.io/travis/CityOfVernonia/cov-arcgis-esm/main.svg?style=flat-square
 [travis-url]: https://travis-ci.com/CityOfVernonia/cov-arcgis-esm
 
