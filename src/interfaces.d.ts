@@ -240,4 +240,22 @@ declare namespace __cov {
     protected locateViewModel: esri.LocateViewModel;
     protected fullscreenViewModel: esri.FullscreenViewModel;
   }
+
+  // cov/widgets/Measure
+  export interface MeasureProperties extends esri.WidgetProperties {
+    /**
+     * Map view.
+     */
+    view?: esri.MapView;
+    /**
+     * An elevation layer instance or elevation service URL.
+     */
+    elevationLayer: ElevationLayer | string;
+  }
+
+  export class Measure extends esri.Widget {
+    constructor(properties: MeasureProperties);
+    view: esri.MapView;
+    elevationLayer: ElevationLayer | string;
+  }
 }
