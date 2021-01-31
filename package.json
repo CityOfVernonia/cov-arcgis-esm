@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint . --ext .js,.ts,.tsx",
     "prettier": "prettier --write \"src/**/*.ts?(x)\"",
-    "test": "npm run prettier && npm run lint && jest && npx tsc && npx node-sass src/css/cov.scss > dist/cov.css"
+    "test": "npm run prettier && npm run lint && jest --coverage && npx tsc && npx node-sass src/css/cov.scss > dist/cov.css"
   },
   "repository": {
     "type": "git",

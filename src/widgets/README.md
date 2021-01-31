@@ -1,6 +1,6 @@
 ## Widgets
 
-Layout widgets. See [interfaces.d.ts](./../interfaces.d.ts) for properties and methods.
+Widgets. See [interfaces.d.ts](./../interfaces.d.ts) for properties and methods.
 
 #### `cov/widgets/Disclaimer`
 

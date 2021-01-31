@@ -57,3 +57,11 @@ Widget and layout styles are `.scss` files intended to be used with [Sass](https
 [Layouts](./src/layouts/)
 
 [Popups](./src/popups/)
+
+### Test
+
+```shell
+npm run test
+```
+
+Runs `prettier`, `eslint`, `jest` and complies the `.ts(x)` and `.scss` files.
