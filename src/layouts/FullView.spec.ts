@@ -10,4 +10,8 @@ describe('cov/layouts/FullView', () => {
   it('should have default title', () => {
     expect(fullView.title).toBe('City of Vernonia');
   });
+
+  it('should have default title', () => {
+    expect(fullView.render()).toBeDefined();
+  });
 });
