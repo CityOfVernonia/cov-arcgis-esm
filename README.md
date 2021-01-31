@@ -13,7 +13,7 @@ City of Vernonia widgets and friends for Esri JavaScript API in ESM.
 ### Install
 
 ```shell
-npm install cov-arcgis-esm
+npm install cov-arcgis-esm --save
 ```
 
 ### Usage
