@@ -12,4 +12,8 @@ describe('cov/widgets/Disclaimer', () => {
       `There are no warranties, expressed or implied, including the warranty of merchantability or fitness for a particular purpose, accompanying this application.`,
     );
   });
+
+  it('should not have a cookie set', () => {
+    expect(Disclaimer.isAccepted()).toBeFalsy();
+  });
 });
