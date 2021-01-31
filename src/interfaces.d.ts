@@ -258,4 +258,50 @@ declare namespace __cov {
     view: esri.MapView;
     elevationLayer: ElevationLayer | string;
   }
+
+  /**
+   * Popups.
+   */
+
+  export class TaxLotPopup extends esri.PopupTemplate {}
+}
+
+declare module 'cov/viewModels/OAuthViewModel' {
+  import OAuthViewModel = __cov.OAuthViewModel;
+  export = OAuthViewModel;
+}
+
+declare module 'cov/viewModels/UnitsViewModel' {
+  import UnitsViewModel = __cov.UnitsViewModel;
+  export = UnitsViewModel;
+}
+
+declare module 'cov/layouts/FullView' {
+  import FullView = __cov.FullView;
+  export = FullView;
+}
+
+declare module 'cov/widgets/Disclaimer' {
+  import Disclaimer = __cov.Disclaimer;
+  export = Disclaimer;
+}
+
+declare module 'cov/widgets/LayerListLegend' {
+  import LayerListLegend = __cov.LayerListLegend;
+  export = LayerListLegend;
+}
+
+declare module 'cov/widgets/MapNavigation' {
+  import MapNavigation = __cov.MapNavigation;
+  export = MapNavigation;
+}
+
+declare module 'cov/widgets/Measure' {
+  import Measure = __cov.Measure;
+  export = Measure;
+}
+
+declare module 'cov/popups/TaxLotPopup' {
+  import TaxLotPopup = __cov.TaxLotPopup;
+  export = TaxLotPopup;
 }
