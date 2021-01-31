@@ -3,10 +3,23 @@ import OAuthViewModel from './OAuthViewModel';
 import Portal from '@arcgis/core/portal/Portal';
 import OAuthInfo from '@arcgis/core/identity/OAuthInfo';
 
+jest.mock('./OAuthViewModel', () => {
+  return function () {
+    return {
+      portal: new Portal(),
+      oAuthInfo: new OAuthInfo(),
+    };
+  };
+});
+
 describe('cov.viewModels.OAuthViewModel', () => {
-  const oAuthViewModel = new OAuthViewModel({
-    portal: new Portal(),
-    oAuthInfo: new OAuthInfo(),
+  let oAuthViewModel: OAuthViewModel;
+
+  beforeEach(() => {
+    oAuthViewModel = new OAuthViewModel({
+      portal: new Portal(),
+      oAuthInfo: new OAuthInfo(),
+    });
   });
 
   it('should not be signed in', () => {
@@ -14,9 +27,11 @@ describe('cov.viewModels.OAuthViewModel', () => {
   });
 
   // need to mock properties on instance
-  it('should set Portal property', () => {
-    expect(oAuthViewModel.portal).toBeUndefined();
-    oAuthViewModel.portal = new Portal();
+  it('should have Portal instance', () => {
     expect(oAuthViewModel.portal).toBeInstanceOf(Portal);
+  });
+
+  it('should have OAuthInfo instance', () => {
+    expect(oAuthViewModel.oAuthInfo).toBeInstanceOf(OAuthInfo);
   });
 });
