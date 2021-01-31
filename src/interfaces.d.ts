@@ -1,6 +1,6 @@
 import esri = __esri;
 
-type HashMapMap<T> = Record<string, T>;
+type HashMap<T> = Record<string, T>;
 
 declare namespace __cov {
   /**

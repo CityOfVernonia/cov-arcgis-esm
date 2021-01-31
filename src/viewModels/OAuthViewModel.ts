@@ -2,8 +2,6 @@
  * A view model for handling OAuth and signing in and out of applications.
  */
 
-import cov = __cov;
-
 import Accessor from '@arcgis/core/core/Accessor';
 
 import { property, subclass } from '@arcgis/core/core/accessorSupport/decorators';
@@ -68,26 +66,26 @@ export default class OAuthViewModel extends Accessor {
   @property()
   signedIn = false;
 
-  constructor(properties: cov.OAuthViewModelProperties) {
-    super(properties);
-    esriId.registerOAuthInfos([properties.oAuthInfo]);
-    // set `oAuthViewModel` on esriId to access auth, user, etc
-    // via `esriId` in other modules and widgets
-    // @ts-ignore
-    esriId['oAuthViewModel'] = this;
-  }
-
   /**
    * Load the view model.
    *
    * @returns Promise<true | false> user signed in.
    */
   load(): Promise<boolean> {
+    const { portal, oAuthInfo } = this;
+
+    esriId.registerOAuthInfos([oAuthInfo]);
+
+    // set `oAuthViewModel` on esriId to access auth, user, etc
+    // via `esriId` in other modules and widgets
+    // @ts-ignore
+    esriId['oAuthViewModel'] = this;
+
     return new Promise((resolve, reject) => {
-      if (this.portal.loaded) {
+      if (portal.loaded) {
         // check for sign in
         esriId
-          .checkSignInStatus(this.portal.url)
+          .checkSignInStatus(portal.url)
           .then((credential: esri.Credential) => {
             // complete successful sign in
             this._completeSignIn(credential, resolve as (value?: boolean | PromiseLike<boolean>) => void);
@@ -108,11 +106,11 @@ export default class OAuthViewModel extends Accessor {
                 esriId.registerToken(cred);
                 // check for sign in
                 esriId
-                  .checkSignInStatus(this.portal.url)
+                  .checkSignInStatus(portal.url)
                   .then(async (credential: esri.Credential) => {
                     // replace portal instance
                     this.portal = new Portal();
-                    await this.portal.load();
+                    await portal.load();
                     // complete successful sign in
                     this._completeSignIn(credential, resolve as (value?: boolean | PromiseLike<boolean>) => void);
                   })
