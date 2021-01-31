@@ -1,8 +1,5 @@
 import UnitsViewModel from './UnitsViewModel';
 
-jest.mock('@arcgis/core/core/Accessor');
-jest.mock('@arcgis/core/core/accessorSupport/decorators');
-
 describe('cov.viewModels.UnitsViewModel', () => {
   const unitsViewModel = new UnitsViewModel();
 
@@ -11,5 +8,12 @@ describe('cov.viewModels.UnitsViewModel', () => {
     expect(unitsViewModel.lengthUnit).toBe('feet');
     expect(unitsViewModel.areaUnit).toBe('acres');
     expect(unitsViewModel.elevationUnit).toBe('feet');
+  });
+
+  it('should have select functions', () => {
+    expect(unitsViewModel.locationSelect).toBeDefined();
+    expect(unitsViewModel.lengthSelect).toBeDefined();
+    expect(unitsViewModel.areaSelect).toBeDefined();
+    expect(unitsViewModel.elevationSelect).toBeDefined();
   });
 });
