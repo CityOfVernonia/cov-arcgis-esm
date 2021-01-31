@@ -98,4 +98,26 @@ declare namespace __cov {
     areaSelect(name?: null | string, title?: null | string): tsx.JSX.Element;
     elevationSelect(name?: null | string, title?: null | string): tsx.JSX.Element;
   }
+
+  /**
+   * Layouts.
+   */
+
+  // cov/layouts/FullView
+  export interface FullViewProperties extends esri.WidgetProperties {
+    /**
+     * Map or scene view.
+     */
+    view: esri.MapView | esri.SceneView;
+    /**
+     * Title in upper left corner.
+     */
+    title?: string;
+  }
+
+  export class FullView extends esri.Widget {
+    constructor(properties: FullViewProperties);
+    view: esri.MapView | esri.SceneView;
+    title: string;
+  }
 }

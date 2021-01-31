@@ -1,0 +1,23 @@
+.cov-full-view {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.cov-full-view--title {
+  user-select: none;
+  box-shadow: none !important;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $background-color;
+  text-shadow: $font-color 1px 1px 8px;
+}
+
+.cov-full-view--view {
+  width: 100%;
+  height: 100%;
+}
