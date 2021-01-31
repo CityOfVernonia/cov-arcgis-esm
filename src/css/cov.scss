@@ -1,11 +1,16 @@
-@import "./../../node_modules/@arcgis/core/assets/esri/themes/base/color";
+// arcgis sass theme functions
+@import "../../node_modules/@arcgis/core/assets/esri/themes/base/functions";
 
-a {
-  color: $interactive-font-color;
-  &:hover {
-    color: $interactive-font-color--hover;
-  }
-}
+// arcgis-js-api sass theme color variables
+@import "../../node_modules/@arcgis/core/assets/esri/themes/base/color";
+
+// arcgis-js-api sass theme sizing and placement
+@import "../../node_modules/@arcgis/core/assets/esri/themes/base/sizes";
+
+// styles
+@import "form";
+@import "slider";
+@import "tabs";
 
 // layouts
 @import "./../layouts/FullView/styles/FullView.scss";
