@@ -120,4 +120,101 @@ declare namespace __cov {
     view: esri.MapView | esri.SceneView;
     title: string;
   }
+
+  /**
+   * Widgets.
+   */
+
+  // cov/widgets/Disclaimer
+  export interface DisclaimerProperties extends esri.WidgetProperties {
+    /**
+     * Disclaimer title (usually the application title).
+     *
+     * @default 'Disclaimer'
+     */
+    title?: string;
+    /**
+     * Disclaimer text.
+     *
+     * @default 'There are no warranties, expressed or implied, including the warranty of merchantability or fitness for a particular purpose, accompanying this application.'
+     */
+    disclaimer?: string;
+  }
+
+  export class Disclaimer extends esri.Widget {
+    constructor(properties?: DisclaimerProperties);
+    title: string;
+    disclaimer: string;
+    static isAccepted(): boolean;
+    on(type: 'accepted', listener: () => void): IHandle;
+  }
+
+  // cov/widgets/MapNavigation
+  export interface MapNavigationProperties extends esri.WidgetProperties {
+    /**
+     * Map view.
+     */
+    view?: esri.MapView | esri.SceneView;
+    /**
+     * Include compass.
+     *
+     * @default true
+     */
+    compass?: boolean;
+    /**
+     * Include home.
+     *
+     * @default true
+     */
+    home?: boolean;
+    /**
+     * Include locate.
+     *
+     * @default true
+     */
+    locate?: boolean;
+    /**
+     * Include fullscreen.
+     *
+     * @default true
+     */
+    fullscreen?: boolean;
+    /**
+     * Fullscreen HTML element.
+     * An element or a querySelector string.
+     */
+    fullscreenElement?: string | HTMLElement;
+    /**
+     * Include button to switch between 2D/3D.
+     *
+     * @default false
+     */
+    viewSwitcher?: boolean;
+    /**
+     * Function to go 2D.
+     */
+    go2D?: () => void;
+    /**
+     * Function to go 23D.
+     */
+    go3D?: () => void;
+  }
+
+  export class MapNavigation extends esri.Widget {
+    constructor(properties: MapNavigationProperties);
+    view: esri.MapView | esri.SceneView;
+    compass: boolean;
+    home: boolean;
+    locate: boolean;
+    fullscreen: boolean;
+    fullscreenElement: string | HTMLElement;
+    viewSwitcher: boolean;
+    go2D: () => void;
+    go3D: () => void;
+    on(type: 'view-switch', listener: (viewSwitch: '2d' | '3d') => void): IHandle;
+    protected zoomViewModel: esri.ZoomViewModel;
+    protected homeViewModel: esri.HomeViewModel;
+    protected locateViewModel: esri.LocateViewModel;
+    protected fullscreenViewModel: esri.FullscreenViewModel;
+  }
 }

@@ -2,10 +2,9 @@ import FullView from './FullView';
 
 import MapView from '@arcgis/core/views/MapView';
 
-describe('cov.viewModels.FullView', () => {
+describe('cov/layouts/FullView', () => {
   const fullView = new FullView({
     view: new MapView(),
-    title: 'My Map',
   });
 
   it('should have default title', () => {

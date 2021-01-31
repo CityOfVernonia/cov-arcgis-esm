@@ -18,7 +18,7 @@ const CSS = {
   view: 'cov-full-view--view',
 };
 
-@subclass('cov/layouts/FullView')
+@subclass('cov.layouts.FullView')
 export default class FullView extends Widget {
   @property()
   view!: esri.MapView | esri.SceneView;
