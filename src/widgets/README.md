@@ -16,6 +16,19 @@ const disclaimer = new Disclaimer({
 document.body.append(disclaimer.container);
 ```
 
+#### `cov/widgets/LayerListLegend`
+
+A widget with tabbed Esri LayerList and Legend widgets.
+
+```typescript
+import LayerListLegend from 'cov/widgets/LayerListLegend';
+
+view.ui.add(
+  new LayerListLegend({ view }),
+  'top-right',
+);
+```
+
 #### `cov/widgets/MapNavigation`
 
 A map nav widget to replace the default zoom control, including optional compass, home, locate and fullscreen controls.

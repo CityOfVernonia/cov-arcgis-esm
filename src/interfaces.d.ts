@@ -149,6 +149,29 @@ declare namespace __cov {
     on(type: 'accepted', listener: () => void): IHandle;
   }
 
+  // cov/widgets/LayerListLegend
+  export interface LayerListLegendProperties extends esri.WidgetProperties {
+    /**
+     * Map or scene view.
+     */
+    view?: esri.MapView | esri.SceneView;
+    /**
+     * Any and all LayerList widget properties.
+     */
+    layerListProperties?: esri.LayerListProperties;
+    /**
+     * Any and all Legend widget properties.
+     */
+    legendProperties?: esri.LegendProperties;
+  }
+
+  export class LayerListLegend extends esri.Widget {
+    constructor(properties?: LayerListLegendProperties);
+    view: esri.MapView | esri.SceneView;
+    layerListProperties: esri.LayerListProperties;
+    legendProperties: esri.LegendProperties;
+  }
+
   // cov/widgets/MapNavigation
   export interface MapNavigationProperties extends esri.WidgetProperties {
     /**
