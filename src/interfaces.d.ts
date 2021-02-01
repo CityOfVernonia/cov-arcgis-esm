@@ -172,6 +172,24 @@ declare namespace __cov {
     legendProperties: esri.LegendProperties;
   }
 
+  // cov/widgets/MadeWith
+  export interface MadeWithProperties extends esri.WidgetProperties {
+    /**
+     * Any valid CSS color...hex, rgb, rgba.
+     */
+    color?: string;
+    /**
+     * Any valid CSS size...px, rem, etc.
+     */
+    size?: string;
+  }
+
+  export class MadeWith extends esri.Widget {
+    constructor(properties?: MadeWithProperties);
+    color: string;
+    size: string;
+  }
+
   // cov/widgets/MapNavigation
   export interface MapNavigationProperties extends esri.WidgetProperties {
     /**
@@ -289,6 +307,11 @@ declare module 'cov/widgets/Disclaimer' {
 declare module 'cov/widgets/LayerListLegend' {
   import LayerListLegend = __cov.LayerListLegend;
   export = LayerListLegend;
+}
+
+declare module 'cov/widgets/MadeWith' {
+  import MadeWith = __cov.MadeWith;
+  export = MadeWith;
 }
 
 declare module 'cov/widgets/MapNavigation' {

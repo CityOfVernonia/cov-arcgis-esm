@@ -13,10 +13,11 @@
 @import "tabs";
 
 // layouts
-@import "./../layouts/FullView/styles/FullView.scss";
+@import "./../layouts/FullView/styles/FullView";
 
 // widgets
-@import "./../widgets/Disclaimer/styles/Disclaimer.scss";
-@import "./../widgets/LayerListLegend/styles/LayerListLegend.scss";
-@import "./../widgets/MapNavigation/styles/MapNavigation.scss";
-@import "./../widgets/Measure/styles/Measure.scss";
+@import "./../widgets/Disclaimer/styles/Disclaimer";
+@import "./../widgets/LayerListLegend/styles/LayerListLegend";
+@import "./../widgets/MadeWith/styles/MadeWith";
+@import "./../widgets/MapNavigation/styles/MapNavigation";
+@import "./../widgets/Measure/styles/Measure";
