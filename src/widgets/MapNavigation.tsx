@@ -1,5 +1,5 @@
 /**
- * A map nav widget to replace the default zoom control, including optional compass, home, locate and fullscreen controls.
+ * A map navigation widget to replace the default zoom control, including optional compass, home, locate and fullscreen controls.
  */
 
 import { aliasOf, property, subclass } from '@arcgis/core/core/accessorSupport/decorators';

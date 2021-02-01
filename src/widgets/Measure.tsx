@@ -1,3 +1,7 @@
+/**
+ * A measurement widget to measure lengths and areas, coordinates, and elevations.
+ */
+
 import cov = __cov;
 
 import { property, subclass } from '@arcgis/core/core/accessorSupport/decorators';

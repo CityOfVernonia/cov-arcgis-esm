@@ -1,6 +1,6 @@
 ## Widgets
 
-Widgets. See [interfaces.d.ts](./../interfaces.d.ts) for properties and methods.
+Widgets. See [interfaces.d.ts](./../interfaces.d.ts) for properties, methods and events.
 
 #### `cov/widgets/Disclaimer`
 
@@ -31,7 +31,7 @@ view.ui.add(
 
 #### `cov/widgets/MapNavigation`
 
-A map nav widget to replace the default zoom control, including optional compass, home, locate and fullscreen controls.
+A map navigation widget to replace the default zoom control, including optional compass, home, locate and fullscreen controls.
 
 ```typescript
 import MapNavigation from 'cov/widgets/MapNavigation';
@@ -41,5 +41,21 @@ view.ui.empty('top-left');
 view.ui.add(
   new MapNavigation({ view }),
   'top-left',
+);
+```
+
+#### `cov/widgets/Measurement`
+
+A measurement widget to measure lengths and areas, coordinates, and elevations.
+
+```typescript
+import Measure from 'cov/widgets/Measure';
+
+view.ui.add(
+  new Measure({
+    view,
+    elevationLayer: new ElevationLayer(), // service url or ElevationLayer instance
+  }),
+  'top-right',
 );
 ```
