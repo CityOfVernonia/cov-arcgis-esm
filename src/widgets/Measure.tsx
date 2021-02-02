@@ -54,6 +54,10 @@ const CSS = {
   button: 'esri-button',
   select: 'esri-select',
 
+  checkboxInput: 'cov-measure--checkbox-input',
+  checked: 'esri-icon-checkbox-checked',
+  unchecked: 'esri-icon-checkbox-unchecked',
+
   result: 'cov-measure--result',
 };
 
@@ -108,6 +112,10 @@ export default class Measure extends Widget {
   private _elevCenterHandle!: esri.PausableWatchHandle;
   @property()
   private _elevFormatHandle!: esri.PausableWatchHandle;
+
+  @property()
+  @renderable()
+  private _showTextSymbol = false;
 
   @property()
   @renderable()
@@ -277,6 +285,7 @@ export default class Measure extends Widget {
               </div>
               <div class={CSS.formControl}>{units.areaSelect(null, 'Select Area Unit')}</div>
             </div>
+            {this._createShowTextSymbolCheckbox()}
             {measureResult}
           </section>
 
@@ -295,6 +304,7 @@ export default class Measure extends Widget {
               </div>
               <div class={CSS.formControl}>{units.locationSelect(null, 'Select Coordinate Unit')}</div>
             </div>
+            {this._createShowTextSymbolCheckbox()}
             <div class={CSS.result}>
               <p>
                 <b>Latitude:</b> {state.latitude}
@@ -325,6 +335,7 @@ export default class Measure extends Widget {
               </div>
               <div class={CSS.formControl}>{units.elevationSelect(null, 'Select Elevation Unit')}</div>
             </div>
+            {this._createShowTextSymbolCheckbox()}
             <div class={CSS.result}>
               <p>
                 <b>Elevation:</b> {state.elevation.toLocaleString()} {this._units.elevationUnit}
@@ -337,6 +348,26 @@ export default class Measure extends Widget {
             </div>
           </section>
         </main>
+      </div>
+    );
+  }
+
+  // create show text symbol checkbox
+  private _createShowTextSymbolCheckbox(): tsx.JSX.Element {
+    return (
+      <div key={KEY++} class={CSS.formRow}>
+        <label class={CSS.checkboxInput}>
+          <span
+            role="checkbox"
+            aria-checked={this._showTextSymbol}
+            class={this._showTextSymbol ? CSS.checked : CSS.unchecked}
+            bind={this}
+            onclick={() => {
+              this._showTextSymbol = !this._showTextSymbol;
+            }}
+          ></span>
+          Show measurement text
+        </label>
       </div>
     );
   }
