@@ -1,10 +1,6 @@
 import { tsx } from '@arcgis/core/widgets/support/widget';
 
-interface iconJSON {
-  path: string;
-}
-
-export function calciteSVG(icon: string | iconJSON, size: number, svgClass?: string): tsx.JSX.Element {
+export function calciteSVG(icon: string | __cov.calciteIconJSON, size: number, svgClass?: string): tsx.JSX.Element {
   const path = typeof icon === 'string' ? icon : icon.path;
   return (
     <svg

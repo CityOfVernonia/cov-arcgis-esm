@@ -289,6 +289,19 @@ declare namespace __cov {
    */
 
   export class TaxLotPopup extends esri.PopupTemplate {}
+
+  /**
+   * Helpers.
+   */
+
+  // cov/calciteIcon
+  export interface calciteIconJSON {
+    path: string;
+  }
+
+  export interface calciteIcon {
+    calciteSVG(icon: string | calciteIconJSON, size: number, svgClass?: string): tsx.JSX.Element;
+  }
 }
 
 declare module 'cov/viewModels/OAuthViewModel' {
@@ -339,4 +352,9 @@ declare module 'cov/widgets/Share' {
 declare module 'cov/popups/TaxLotPopup' {
   import TaxLotPopup = __cov.TaxLotPopup;
   export = TaxLotPopup;
+}
+
+declare module 'cov/calciteIcon' {
+  import calciteIcon = __cov.calciteIcon;
+  export = calciteIcon;
 }
