@@ -277,6 +277,13 @@ declare namespace __cov {
     elevationLayer: ElevationLayer | string;
   }
 
+  // cov/widgets/Share
+  export interface ShareProperties extends esri.WidgetProperties {}
+
+  export class Share extends esri.Widget {
+    constructor(properties?: ShareProperties);
+  }
+
   /**
    * Popups.
    */
@@ -322,6 +329,11 @@ declare module 'cov/widgets/MapNavigation' {
 declare module 'cov/widgets/Measure' {
   import Measure = __cov.Measure;
   export = Measure;
+}
+
+declare module 'cov/widgets/Share' {
+  import Share = __cov.Share;
+  export = Share;
 }
 
 declare module 'cov/popups/TaxLotPopup' {
