@@ -121,6 +121,42 @@ declare namespace __cov {
     title: string;
   }
 
+  // cov/layouts/Vernonia
+  export interface VernoniaProperties extends esri.WidgetProperties {
+    /**
+     * Map or scene view.
+     */
+    view: esri.MapView | esri.SceneView;
+    /**
+     * OAuth view model. Adds user control to header when provided.
+     */
+    oAuthViewModel?: cov.OAuthViewModel;
+    /**
+     * Include header search.
+     * @default true
+     */
+    headerSearch?: boolean;
+    /**
+     * Search view model to run header search.
+     * NOTE: will not override `headerSearch: false`.
+     */
+    searchViewModel?: esri.SearchViewModel;
+    /**
+     * Next basemap instance. Adds BasemapToggle to bottom right when provided.
+     */
+    nextBasemap?: esri.Basemap;
+    // widgets?: cov.WidgetSwitcherWidgetProperties[];
+  }
+
+  export interface Vernonia extends esri.Widget {
+    constructor(properties: VernoniaProperties);
+    view: esri.MapView | esri.SceneView;
+    oAuthViewModel: cov.OAuthViewModel;
+    headerSearch: boolean;
+    searchViewModel: esri.SearchViewModel;
+    nextBasemap: esri.Basemap;
+  }
+
   /**
    * Widgets.
    */
@@ -317,6 +353,11 @@ declare module 'cov/viewModels/UnitsViewModel' {
 declare module 'cov/layouts/FullView' {
   import FullView = __cov.FullView;
   export = FullView;
+}
+
+declare module 'cov/layouts/Vernonia' {
+  import Vernonia = __cov.Vernonia;
+  export = Vernonia;
 }
 
 declare module 'cov/widgets/Disclaimer' {
