@@ -122,11 +122,25 @@ declare namespace __cov {
   }
 
   // cov/layouts/Vernonia
+  export interface VernoniaExpandWidgetProperties extends Object {
+    widget: esri.Widget;
+    expand: esri.ExpandProperties;
+  }
+
   export interface VernoniaProperties extends esri.WidgetProperties {
     /**
      * Map or scene view.
      */
     view: esri.MapView | esri.SceneView;
+    /**
+     * Application title.
+     */
+    title?: string;
+    /**
+     * Make it with love and coffee in tuff town.
+     * @default true
+     */
+    madeWith?: boolean;
     /**
      * OAuth view model. Adds user control to header when provided.
      */
@@ -145,16 +159,22 @@ declare namespace __cov {
      * Next basemap instance. Adds BasemapToggle to bottom right when provided.
      */
     nextBasemap?: esri.Basemap;
-    // widgets?: cov.WidgetSwitcherWidgetProperties[];
+    /**
+     * Widgets to add.
+     */
+    widgets?: VernoniaExpandWidgetProperties[];
   }
 
-  export interface Vernonia extends esri.Widget {
+  export class Vernonia extends esri.Widget {
     constructor(properties: VernoniaProperties);
     view: esri.MapView | esri.SceneView;
+    title: string;
+    madeWith: boolean;
     oAuthViewModel: cov.OAuthViewModel;
     headerSearch: boolean;
     searchViewModel: esri.SearchViewModel;
     nextBasemap: esri.Basemap;
+    widgets: VernoniaExpandWidgetProperties[];
   }
 
   /**
