@@ -181,6 +181,20 @@ declare namespace __cov {
    * Widgets.
    */
 
+  // cov/widgets/CalcitePrint
+  // not production ready
+  export interface CalcitePrintProperties extends esri.WidgetProperties {
+    view: esri.MapView | esri.SceneView;
+    printServiceUrl: string;
+    printTitle?: string;
+  }
+
+  export class CalcitePrint extends esri.Widget {
+    view: esri.MapView | esri.SceneView;
+    printServiceUrl: string;
+    printTitle: string;
+  }
+
   // cov/widgets/Disclaimer
   export interface DisclaimerProperties extends esri.WidgetProperties {
     /**
@@ -350,14 +364,7 @@ declare namespace __cov {
    * Helpers.
    */
 
-  // cov/calciteIcon
-  export interface calciteIconJSON {
-    path: string;
-  }
-
-  export interface calciteIcon {
-    calciteSVG(icon: string | calciteIconJSON, size: number, svgClass?: string): tsx.JSX.Element;
-  }
+  // code some helpers
 }
 
 declare module 'cov/viewModels/OAuthViewModel' {
@@ -378,6 +385,11 @@ declare module 'cov/layouts/FullView' {
 declare module 'cov/layouts/Vernonia' {
   import Vernonia = __cov.Vernonia;
   export = Vernonia;
+}
+
+declare module 'cov/widgets/CalcitePrint' {
+  import CalcitePrint = __cov.CalcitePrint;
+  export = CalcitePrint;
 }
 
 declare module 'cov/widgets/Disclaimer' {

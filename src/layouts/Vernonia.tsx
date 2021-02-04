@@ -77,7 +77,6 @@ export default class Vernonia extends Widget {
     }
 
     widgets.forEach((widget: cov.VernoniaExpandWidgetProperties) => {
-
       const { expand } = widget;
 
       // expand.group = 'top-right-expand-group';
