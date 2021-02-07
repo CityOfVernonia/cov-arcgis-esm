@@ -3,9 +3,71 @@ import esri = __esri;
 type HashMap<T> = Record<string, T>;
 
 declare namespace __cov {
-  /**
-   * View models.
-   */
+  ////////////////////////////////////////////////////
+  // View models.
+  ////////////////////////////////////////////////////
+
+  // cov/viewModels/MeasureViewModel
+  export interface MeasureState {
+    action:
+      | 'ready'
+      | 'measuringLength'
+      | 'measuringArea'
+      | 'length'
+      | 'area'
+      | 'queryingLocation'
+      | 'location'
+      | 'queryingElevation'
+      | 'elevation';
+    length: number;
+    area: number;
+    x: number | string;
+    y: number | string;
+    z: number;
+  }
+
+  export interface MeasureViewModelProperties extends Object {
+    /**
+     * Map view.
+     */
+    view?: esri.MapView;
+    /**
+     * Show text graphic in view.
+     * @default true
+     */
+    showText?: boolean;
+    /**
+     * Color for markers, lines, and text.
+     * Any color the API recognizes https://developers.arcgis.com/javascript/latest/api-reference/esri-Color.html.
+     * @default [230, 82, 64]
+     */
+    color?: any;
+    /**
+     * Color for fills.
+     * Any color the API recognizes https://developers.arcgis.com/javascript/latest/api-reference/esri-Color.html.
+     * @default [230, 82, 64, 0.15]
+     */
+    fillColor?: any;
+  }
+
+  export class MeasureViewModel extends esri.Accessor {
+    constructor(properties?: MeasureViewModelProperties);
+    view: esri.MapView;
+    showText: boolean;
+    color: any;
+    fillColor: any;
+    protected hasGround: boolean;
+    protected state: MeasureState;
+    protected units: UnitsViewModel;
+    protected draw: esri.Draw;
+    protected ground: esri.Ground;
+    protected layer: GraphicsLayer;
+    clear: () => void;
+    length: () => void;
+    area: () => void;
+    location: () => void;
+    elevation: () => void;
+  }
 
   // cov/viewModels/OAuthViewModel
   export interface OAuthViewModelProperties extends Object {
@@ -365,6 +427,19 @@ declare namespace __cov {
    */
 
   // code some helpers
+}
+
+/**
+ * Modules.
+ */
+
+////////////////////////////////////////////////////
+// View models.
+////////////////////////////////////////////////////
+
+declare module 'cov/viewModels/MeasureViewModel' {
+  import MeasureViewModel = __cov.MeasureViewModel;
+  export = MeasureViewModel;
 }
 
 declare module 'cov/viewModels/OAuthViewModel' {
