@@ -239,9 +239,66 @@ declare namespace __cov {
     widgets: VernoniaExpandWidgetProperties[];
   }
 
-  /**
-   * Widgets.
-   */
+  ////////////////////////////////////////////////////
+  // Widgets.
+  ////////////////////////////////////////////////////
+
+  // cov/widgets/CalcitePrint
+  export interface CalciteMeasureProperties extends esri.WidgetProperties {
+    view?: esri.MapView;
+    /**
+     * Widget theme.
+     * @default 'light'
+     */
+    theme?: 'light' | 'dark';
+    /**
+     * Widget width.
+     * @default 'm'
+     */
+    widthScale?: 's' | 'm' | 'l';
+    /**
+     * Component scale.
+     * @default 's'
+     */
+    scale?: 's' | 'm' | 'l';
+    /**
+     * Show text with geometry in map when measuring.
+     * @default false
+     */
+    showText?: boolean;
+    /**
+     * Color for markers, lines, and text.
+     * Any color the API recognizes https://developers.arcgis.com/javascript/latest/api-reference/esri-Color.html.
+     * @default [230, 82, 64]
+     */
+    color?: any;
+    /**
+     * Color for fills.
+     * Any color the API recognizes https://developers.arcgis.com/javascript/latest/api-reference/esri-Color.html.
+     * @default [230, 82, 64, 0.15]
+     */
+    fillColor?: any;
+  }
+
+  export class CalciteMeasure extends esri.Widget {
+    constructor(properties?: CalciteMeasureProperties);
+    view: esri.MapView;
+    theme: 'light' | 'dark';
+    widthScale: 's' | 'm' | 'l';
+    scale: 's' | 'm' | 'l';
+    showText: boolean;
+    color: any;
+    fillColor: any;
+    viewModel: MeasureViewModel;
+    protected state: MeasureState;
+    protected units: UnitsViewModel;
+    protected hasGround: boolean;
+    clear(): void;
+    length(): void;
+    area(): void;
+    location(): void;
+    elevation(): void;
+  }
 
   // cov/widgets/CalcitePrint
   // not production ready
@@ -452,6 +509,10 @@ declare module 'cov/viewModels/UnitsViewModel' {
   export = UnitsViewModel;
 }
 
+////////////////////////////////////////////////////
+// Layouts.
+////////////////////////////////////////////////////
+
 declare module 'cov/layouts/FullView' {
   import FullView = __cov.FullView;
   export = FullView;
@@ -460,6 +521,15 @@ declare module 'cov/layouts/FullView' {
 declare module 'cov/layouts/Vernonia' {
   import Vernonia = __cov.Vernonia;
   export = Vernonia;
+}
+
+////////////////////////////////////////////////////
+// Widgets.
+////////////////////////////////////////////////////
+
+declare module 'cov/widgets/CalciteMeasure' {
+  import CalciteMeasure = __cov.CalciteMeasure;
+  export = CalciteMeasure;
 }
 
 declare module 'cov/widgets/CalcitePrint' {
@@ -497,12 +567,11 @@ declare module 'cov/widgets/Share' {
   export = Share;
 }
 
+////////////////////////////////////////////////////
+// Popups.
+////////////////////////////////////////////////////
+
 declare module 'cov/popups/TaxLotPopup' {
   import TaxLotPopup = __cov.TaxLotPopup;
   export = TaxLotPopup;
-}
-
-declare module 'cov/calciteIcon' {
-  import calciteIcon = __cov.calciteIcon;
-  export = calciteIcon;
 }

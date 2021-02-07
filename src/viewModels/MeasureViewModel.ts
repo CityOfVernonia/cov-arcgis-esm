@@ -426,8 +426,6 @@ export default class MeasureViewModel extends Accessor {
         } = this;
         let graphic: Graphic;
 
-        console.log(updated);
-
         switch (updated) {
           case 'lengthUnit':
             if (action !== 'length' && action !== 'measuringLength') break;
