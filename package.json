@@ -1,6 +1,6 @@
 {
   "name": "cov-arcgis-esm",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "City of Vernonia widgets and friends for Esri JavaScript API in ESM.",
   "scripts": {
     "lint": "eslint . --ext .js,.ts,.tsx",

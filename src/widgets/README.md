@@ -2,6 +2,19 @@
 
 Widgets. See [interfaces.d.ts](./../interfaces.d.ts) for properties, methods and events.
 
+#### `cov/widgets/CalciteMeasure`
+
+Classic Vernonia measure in Calcite.
+
+```typescript
+import CalciteMeasure from 'cov/widgets/CalciteMeasure';
+
+view.ui.add(
+  new CalciteMeasure({ view }),
+  'top-right',
+);
+```
+
 #### `cov/widgets/Disclaimer`
 
 A widget to display a disclaimer with a `Don't show me this again` option.

@@ -2,6 +2,10 @@
 
 Resubale logic modules. See [interfaces.d.ts](./../interfaces.d.ts) for properties and methods.
 
+#### `cov/viewModels/MeasureViewModel`
+
+Provides logic for measuring widgets.
+
 #### `cov/viewModels/OAuthViewModel`
 
 A view model for handling OAuth and signing in and out of applications.

@@ -11,42 +11,6 @@ import '@esri/calcite-components';
 
 import MeasureViewModel from './../viewModels/MeasureViewModel';
 
-export interface CalciteMeasureProperties extends esri.WidgetProperties {
-  view?: esri.MapView;
-  /**
-   * Widget theme.
-   * @default 'light'
-   */
-  theme?: 'light' | 'dark';
-  /**
-   * Widget width.
-   * @default 'm'
-   */
-  widthScale?: 's' | 'm' | 'l';
-  /**
-   * Component scale.
-   * @default 's'
-   */
-  scale?: 's' | 'm' | 'l';
-  /**
-   * Show text with geometry in map when measuring.
-   * @default false
-   */
-  showText?: boolean;
-  /**
-   * Color for markers, lines, and text.
-   * Any color the API recognizes https://developers.arcgis.com/javascript/latest/api-reference/esri-Color.html.
-   * @default [230, 82, 64]
-   */
-  color?: any;
-  /**
-   * Color for fills.
-   * Any color the API recognizes https://developers.arcgis.com/javascript/latest/api-reference/esri-Color.html.
-   * @default [230, 82, 64, 0.15]
-   */
-  fillColor?: any;
-}
-
 const CSS = {
   base: 'cov-calcite-measure',
   tabs: 'tabs',
@@ -125,10 +89,6 @@ export default class CalciteMeasure extends Widget {
   })
   @renderable()
   protected hasGround!: boolean;
-
-  // constructor(properties?: CalciteMeasureProperties) {
-  //   super(properties);
-  // }
 
   /**
    * View model methods called by the widget.
