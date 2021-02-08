@@ -161,9 +161,9 @@ declare namespace __cov {
     elevationSelect(name?: null | string, title?: null | string): tsx.JSX.Element;
   }
 
-  /**
-   * Layouts.
-   */
+  ////////////////////////////////////////////////////
+  // Layouts.
+  ////////////////////////////////////////////////////
 
   // cov/layouts/FullView
   export interface FullViewProperties extends esri.WidgetProperties {
@@ -181,6 +181,29 @@ declare namespace __cov {
     constructor(properties: FullViewProperties);
     view: esri.MapView | esri.SceneView;
     title: string;
+  }
+
+  // cov/layouts/MapWidgetTable
+  export interface MapWidgetTableProperties extends esri.WidgetProperties {
+    /**
+     * Map view instance.
+     */
+    view: esri.MapView;
+    /**
+     * Feature table instance.
+     */
+    featureTable: esri.FeatureTable;
+    /**
+     * Any widget class extending esri.Widget.
+     */
+    widget: esri.Widget;
+  }
+
+  export class MapWidgetTable extends esri.Widget {
+    constructor(properties: MapWidgetTableProperties);
+    view: esri.MapView;
+    featureTable: esri.FeatureTable;
+    widget: esri.Widget;
   }
 
   // cov/layouts/Vernonia
@@ -516,6 +539,11 @@ declare module 'cov/viewModels/UnitsViewModel' {
 declare module 'cov/layouts/FullView' {
   import FullView = __cov.FullView;
   export = FullView;
+}
+
+declare module 'cov/layouts/MapWidgetTable' {
+  import MapWidgetTable = __cov.MapWidgetTable;
+  export = MapWidgetTable;
 }
 
 declare module 'cov/layouts/Vernonia' {
