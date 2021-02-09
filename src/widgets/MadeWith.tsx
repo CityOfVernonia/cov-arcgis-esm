@@ -26,7 +26,10 @@ export default class MadeWith extends Widget {
   render(): tsx.JSX.Element {
     const { color, backgroundColor, opacity, size } = this;
     return (
-      <div class={CSS.base} style={`opacity:${opacity};color:${color};background-color:${backgroundColor};font-size:${size};`}>
+      <div
+        class={CSS.base}
+        style={`opacity:${opacity};color:${color};background-color:${backgroundColor};font-size:${size};`}
+      >
         <span>Made with</span>
         <svg
           style={`width:${size};height:${size};`}
