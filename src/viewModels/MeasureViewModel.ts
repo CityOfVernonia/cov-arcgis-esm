@@ -94,9 +94,11 @@ export default class MeasureViewModel extends Accessor {
     _coordCenterHandle.resume();
     _coordFormatHandle.resume();
     this._setLocation(view.center);
-    _elevCenterHandle.resume();
-    _elevFormatHandle.resume();
-    this._setElevation(view.center);
+    if (_elevCenterHandle && _elevFormatHandle) {
+      _elevCenterHandle.resume();
+      _elevFormatHandle.resume();
+      this._setElevation(view.center);
+    }
     draw.reset();
     layer.removeAll();
     this.state = {
