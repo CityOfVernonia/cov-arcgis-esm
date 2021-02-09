@@ -1,11 +1,8 @@
 /**
  * A widget to explain with what this is made with.
  */
-
 import { subclass, property } from '@arcgis/core/core/accessorSupport/decorators';
-
 import { tsx } from '@arcgis/core/widgets/support/widget';
-
 import Widget from '@arcgis/core/widgets/Widget';
 
 const CSS = {
@@ -15,15 +12,21 @@ const CSS = {
 @subclass('cov.widgets.MadeWith')
 export default class MadeWith extends Widget {
   @property()
+  size = '14px';
+
+  @property()
   color = '#000000';
 
   @property()
-  size = '16px';
+  backgroundColor = '#FFFFFF';
+
+  @property()
+  opacity = 0.6;
 
   render(): tsx.JSX.Element {
-    const { color, size } = this;
+    const { color, backgroundColor, opacity, size } = this;
     return (
-      <div class={CSS.base} style={`color:${color};font-size:${size};`}>
+      <div class={CSS.base} style={`opacity:${opacity};color:${color};background-color:${backgroundColor};font-size:${size};`}>
         <span>Made with</span>
         <svg
           style={`width:${size};height:${size};`}

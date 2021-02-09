@@ -387,19 +387,29 @@ declare namespace __cov {
   // cov/widgets/MadeWith
   export interface MadeWithProperties extends esri.WidgetProperties {
     /**
+     * Any valid CSS size...px, rem, etc.
+     */
+    size?: string;
+    /**
      * Any valid CSS color...hex, rgb, rgba.
      */
     color?: string;
     /**
-     * Any valid CSS size...px, rem, etc.
+     * Any valid CSS color...hex, rgb, rgba.
      */
-    size?: string;
+    backgroundColor?: string;
+    /**
+     * Widget opacity.
+     */
+    opacity?: number;
   }
 
   export class MadeWith extends esri.Widget {
     constructor(properties?: MadeWithProperties);
-    color: string;
     size: string;
+    color: string;
+    backgroundColor: string;
+    opacity: number;
   }
 
   // cov/widgets/MapNavigation
