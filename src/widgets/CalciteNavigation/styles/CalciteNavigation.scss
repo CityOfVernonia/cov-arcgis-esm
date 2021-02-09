@@ -1,0 +1,20 @@
+.cov-calcite-navigation {
+  overflow: hidden;
+  calcite-action-bar {
+    overflow: hidden;
+  }
+  // no group padding
+  calcite-action-group {
+    padding: 0;
+  }
+}
+
+/*
+:host(.compass-action) .button {
+  border-radius: 50%;
+}
+
+:host(calcite-action-bar[class="compass-action"]) .button {
+  border-radius: 50%;
+}
+*/

@@ -323,6 +323,62 @@ declare namespace __cov {
     elevation(): void;
   }
 
+  // cov/widgets/CalciteNavigation
+  export interface CalciteNavigationCustomActions extends Object {
+    icon: string;
+    title: string;
+    onclick(element?: HTMLCalciteActionElement): void;
+  }
+
+  export interface CalciteNavigationProperties extends esri.WidgetProperties {
+    view?: esri.MapView;
+    /**
+     * Actions to include.
+     * All default to true.
+     */
+    include?: {
+      home?: boolean;
+      compass?: boolean;
+      locate?: boolean;
+      fullscreen?: boolean;
+    };
+    /**
+     * Fullscreen HTML element.
+     * An element or a querySelector string.
+     */
+    fullscreenElement?: HTMLElement;
+    /**
+     * Custom actions.
+     * All custom actions included in single action group.
+     */
+    actions?: CalciteNavigationCustomActions[];
+    /**
+     * Widget theme.
+     * @default 'light'
+     */
+    theme?: 'light' | 'dark';
+    /**
+     * Component scale.
+     * @default 's'
+     */
+    scale?: 's' | 'm' | 'l';
+  }
+
+  export class CalciteNavigation extends esri.Widget {
+    constructor(properties?: CalciteNavigationProperties);
+    view: esri.MapView;
+    include: {
+      home: boolean;
+      compass: boolean;
+      locate: boolean;
+      fullscreen: boolean;
+    };
+    fullscreenElement: HTMLElement;
+    actions: CalciteNavigationCustomActions[];
+    theme: 'light' | 'dark';
+    scale: 's' | 'm' | 'l';
+  }
+
   // cov/widgets/CalcitePrint
   // not production ready
   export interface CalcitePrintProperties extends esri.WidgetProperties {
@@ -568,6 +624,11 @@ declare module 'cov/layouts/Vernonia' {
 declare module 'cov/widgets/CalciteMeasure' {
   import CalciteMeasure = __cov.CalciteMeasure;
   export = CalciteMeasure;
+}
+
+declare module 'cov/widgets/CalciteNavigation' {
+  import CalciteNavigation = __cov.CalciteNavigation;
+  export = CalciteNavigation;
 }
 
 declare module 'cov/widgets/CalcitePrint' {
