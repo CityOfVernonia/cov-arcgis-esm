@@ -110,7 +110,7 @@ export default class OAuthViewModel extends Accessor {
                   .then(async (credential: esri.Credential) => {
                     // replace portal instance
                     this.portal = new Portal();
-                    await portal.load();
+                    await this.portal.load();
                     // complete successful sign in
                     this._completeSignIn(credential, resolve as (value?: boolean | PromiseLike<boolean>) => void);
                   })
