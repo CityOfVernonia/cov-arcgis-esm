@@ -1,0 +1,19 @@
+.cov-sign-in-required {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  background-color: var(--calcite-ui-background);
+
+  calcite-panel {
+    max-width: 200px;
+    max-height: 200px;
+    margin-top: 2rem;
+  }
+
+  h3 {
+    margin: 0.5rem 0;
+  }
+}

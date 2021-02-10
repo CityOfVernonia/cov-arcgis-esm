@@ -562,6 +562,16 @@ declare namespace __cov {
     constructor(properties?: ShareProperties);
   }
 
+  // cov/widgets/SignInRequired
+  export interface SignInRequiredProperties extends esri.WidgetProperties {
+    oAuthViewModel: OAuthViewModel;
+  }
+
+  export class SignInRequired extends esri.Widget {
+    constructor(properties: SignInRequiredProperties);
+    oAuthViewModel: OAuthViewModel;
+  }
+
   /**
    * Popups.
    */
@@ -664,6 +674,11 @@ declare module 'cov/widgets/Measure' {
 declare module 'cov/widgets/Share' {
   import Share = __cov.Share;
   export = Share;
+}
+
+declare module 'cov/widgets/SignInRequired' {
+  import SignInRequired = __cov.SignInRequired;
+  export = SignInRequired;
 }
 
 ////////////////////////////////////////////////////
