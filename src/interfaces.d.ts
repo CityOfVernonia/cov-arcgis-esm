@@ -206,62 +206,6 @@ declare namespace __cov {
     widget: esri.Widget;
   }
 
-  // cov/layouts/Vernonia
-  export interface VernoniaExpandWidgetProperties extends Object {
-    widget: esri.Widget;
-    expand: esri.ExpandProperties;
-  }
-
-  export interface VernoniaProperties extends esri.WidgetProperties {
-    /**
-     * Map or scene view.
-     */
-    view: esri.MapView | esri.SceneView;
-    /**
-     * Application title.
-     */
-    title?: string;
-    /**
-     * Make it with love and coffee in tuff town.
-     * @default true
-     */
-    madeWith?: boolean;
-    /**
-     * OAuth view model. Adds user control to header when provided.
-     */
-    oAuthViewModel?: cov.OAuthViewModel;
-    /**
-     * Include header search.
-     * @default true
-     */
-    headerSearch?: boolean;
-    /**
-     * Search view model to run header search.
-     * NOTE: will not override `headerSearch: false`.
-     */
-    searchViewModel?: esri.SearchViewModel;
-    /**
-     * Next basemap instance. Adds BasemapToggle to bottom right when provided.
-     */
-    nextBasemap?: esri.Basemap;
-    /**
-     * Widgets to add.
-     */
-    widgets?: VernoniaExpandWidgetProperties[];
-  }
-
-  export class Vernonia extends esri.Widget {
-    constructor(properties: VernoniaProperties);
-    view: esri.MapView | esri.SceneView;
-    title: string;
-    madeWith: boolean;
-    oAuthViewModel: cov.OAuthViewModel;
-    headerSearch: boolean;
-    searchViewModel: esri.SearchViewModel;
-    nextBasemap: esri.Basemap;
-    widgets: VernoniaExpandWidgetProperties[];
-  }
-
   ////////////////////////////////////////////////////
   // Widgets.
   ////////////////////////////////////////////////////
@@ -583,6 +527,111 @@ declare namespace __cov {
    */
 
   // code some helpers
+
+  ////////////////////////////////////////////////////
+  // Vernonia application.
+  ////////////////////////////////////////////////////
+
+  export interface VernoniaPanelWidgetProperties extends Object {
+    placement: 'menu' | 'operational';
+    widget: esri.Widget;
+    title: string;
+    icon: string;
+  }
+
+  export interface VernoniaViewWidgetProperties extends Object {
+    widget: esri.Widget;
+    placement: 'view';
+    position:
+      | 'bottom-leading'
+      | 'bottom-left'
+      | 'bottom-right'
+      | 'bottom-trailing'
+      | 'top-leading'
+      | 'top-left'
+      | 'top-right'
+      | 'top-trailing'
+      | 'manual';
+  }
+
+  export interface VernoniaDisclaimerOptions extends Object {
+    /**
+     * Include disclaimer.
+     * @default 'true'
+     */
+    include?: boolean;
+    /**
+     * Disclaimer title.
+     * @default 'Disclaimer'
+     */
+    title?: string;
+    /**
+     * Disclaimer message.
+     * @default 'There are no warranties, expressed or implied, including the warranty of merchantability or fitness for a particular purpose, accompanying this application.'
+     */
+    message?: string;
+  }
+
+  export interface VernoniaPanelState extends Object {
+    collapsed: boolean;
+    activeWidgetId: string | null;
+    actions: Collection<tsx.JSX.Element>;
+    widgets: Collection<tsx.JSX.Element>;
+    loaded: boolean;
+  }
+
+  export interface VernoniaProperties extends esri.WidgetProperties {
+    /**
+     * esri.MapView. Scene view is not supported.
+     */
+    view: esri.MapView;
+    /**
+     * Application title.
+     * @default 'Vernonia'
+     */
+    title?: string;
+    /**
+     * Add application title to view.
+     * @default 'false'
+     */
+    viewTitle?: boolean;
+    /**
+     * Disclaimer options.
+     */
+    disclaimerOptions?: VernoniaDisclaimerOptions;
+    /**
+     * Navigation options.
+     */
+    navigationOptions?: cov.CalciteNavigationProperties;
+    /**
+     * Optional cov.OAuthViewModel. Sign in/out and user controls created when provided.
+     */
+    oAuthViewModel?: cov.OAuthViewModel;
+    /**
+     * Optional esri.SearchViewModel. Search widget added when provided.
+     */
+    searchViewModel?: esri.SearchViewModel;
+    /**
+     * Optional widgets to add to primary or contextual panels.
+     * A panel won't display if no widgets for that particular panel are provided.
+     */
+    widgets?: (VernoniaPanelWidgetProperties | VernoniaViewWidgetProperties)[];
+  }
+
+  export class Vernonia extends esri.Widget {
+    constructor(properties: VernoniaProperties);
+    view: esri.MapView;
+    title: string;
+    viewTitle: boolean;
+    disclaimerOptions: VernoniaDisclaimerOptions;
+    navigationOptions: cov.CalciteNavigationProperties;
+    oAuthViewModel: cov.OAuthViewModel;
+    searchViewModel: esri.SearchViewModel;
+    widgets: (VernoniaPanelWidgetProperties | VernoniaViewWidgetProperties)[];
+    navigation: CalciteNavigation;
+    menuPanelState: VernoniaPanelState;
+    operationalPanelState: VernoniaPanelState;
+  }
 }
 
 /**
@@ -620,11 +669,6 @@ declare module 'cov/layouts/FullView' {
 declare module 'cov/layouts/MapWidgetTable' {
   import MapWidgetTable = __cov.MapWidgetTable;
   export = MapWidgetTable;
-}
-
-declare module 'cov/layouts/Vernonia' {
-  import Vernonia = __cov.Vernonia;
-  export = Vernonia;
 }
 
 ////////////////////////////////////////////////////
@@ -688,4 +732,13 @@ declare module 'cov/widgets/SignInRequired' {
 declare module 'cov/popups/TaxLotPopup' {
   import TaxLotPopup = __cov.TaxLotPopup;
   export = TaxLotPopup;
+}
+
+////////////////////////////////////////////////////
+// Vernonia application.
+////////////////////////////////////////////////////
+
+declare module 'cov/Vernonia' {
+  import Vernonia = __cov.Vernonia;
+  export = Vernonia;
 }

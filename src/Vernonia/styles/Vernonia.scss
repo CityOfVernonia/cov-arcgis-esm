@@ -1,0 +1,180 @@
+.cov-vernonia {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: row;
+  background-color: var(--calcite-ui-background);
+
+  // calcite...ify scale bar colors
+  .esri-scale-bar__ruler-block {
+    background-color: var(--calcite-ui-text-2);
+  }
+  .esri-scale-bar__label {
+    color: var(--calcite-ui-text-2);
+  }
+}
+
+/**
+ * Panels. Hidden when no widgets are provided.
+ */
+.cov-vernonia--panel {
+  &[hidden] {
+    display: none;
+  }
+}
+
+/**
+ * Panel widgets.
+ */
+.cov-vernonia--panel--widget {
+  &[hidden] {
+    display: none;
+  }
+}
+
+/**
+ * Action bar avatar for account control widget.
+ */
+ .cov-vernonia--action-bar--avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  width: 42px;
+  cursor: pointer;
+}
+
+/**
+ * Content.
+ */
+.cov-vernonia--content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  background-color: var(--calcite-ui-background);
+}
+
+.cov-vernonia--content--view {
+  width: 100%;
+  height: 100%;
+
+  .view--title {
+    margin: 0;
+    cursor: default;
+    user-select: none;
+    line-height: 1;
+    box-shadow: none !important;
+    color: var(--calcite-ui-foreground-1);
+    text-shadow: 3px 3px 6px var(--calcite-ui-text-1);
+  }
+}
+
+.cov-vernonia--content--leading,
+.cov-vernonia--content--trailing {
+  display: none;
+  width: 100%;
+  height: 200px;
+}
+
+.cov-vernonia--content--visible {
+  display: flex;
+}
+
+/**
+ * Map title widget.
+ */
+.cov-vernonia--map-title {
+  box-shadow: none !important;
+  user-select: none;
+  color: var(--calcite-ui-background);
+  font-size: var(--calcite-font-size-3);
+  font-weight: var(--calcite-font-weight-medium);
+  text-shadow: 2px 2px 4px var(--calcite-ui-text-1);
+}
+
+/**
+ * Loading screen widget.
+ */
+.cov-vernonia--loading-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 500;
+  color: var(--calcite-ui-text-1);
+  background-color: var(--calcite-ui-background);
+}
+
+.cov-vernonia--loading-screen_info {
+  display: flex;
+  flex-flow: column;
+  width: 300px;
+
+  p {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+
+    &:nth-child(1) {
+      font-size: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    &:nth-child(3) {
+      margin: 1.25rem 0 0.5rem 0;
+    }
+  }
+}
+
+.cov-vernonia--loading-screen_heart,
+.cov-vernonia--loading-screen_coffee {
+  width: 1rem;
+  height: 1rem;
+  margin: 0 0.35rem;
+}
+
+.cov-vernonia--loading-screen_heart {
+  color: #d9534f;
+}
+
+.cov-vernonia--loading-screen_coffee {
+  color: #be9969;
+}
+
+.cov-vernonia--loading-screen_built-with {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  color: var(--calcite-ui-brand);
+}
+
+/**
+ * Account control widget.
+ */
+.cov-vernonia--account-control {
+  height: 100%;
+  overflow: auto;
+  padding: var(--calcite-spacing-half);
+
+  p {
+    margin: var(--calcite-spacing) 0;
+    &:nth-child(1) {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      calcite-avatar {
+        width: 52px;
+        height: 52px;
+        margin-right: var(--calcite-spacing-half);
+      }
+      font-size: var(--calcite-spacing-plus-quarter);
+    }
+  }
+}
