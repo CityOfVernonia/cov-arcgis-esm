@@ -469,10 +469,10 @@ export default class MeasureViewModel extends Accessor {
    */
   private _initElevation(view: esri.MapView, units: UnitsViewModel): void {
     this.hasGround = true;
-      this.ground = view.map.ground;
-      this._setElevation(view.center);
-      this._elevCenterHandle = pausable(view, 'center', this._setElevation.bind(this));
-      this._elevFormatHandle = pausable(units, 'elevationUnit', this._setElevation.bind(this, view.center));
+    this.ground = view.map.ground;
+    this._setElevation(view.center);
+    this._elevCenterHandle = pausable(view, 'center', this._setElevation.bind(this));
+    this._elevFormatHandle = pausable(units, 'elevationUnit', this._setElevation.bind(this, view.center));
   }
 
   /**
