@@ -410,11 +410,9 @@ export default class MeasureViewModel extends Accessor {
 
     // initialize elevation
     if (view.map.ground.layers.length) {
-      this.hasGround = true;
-      this.ground = view.map.ground;
-      this._setElevation(view.center);
-      this._elevCenterHandle = pausable(view, 'center', this._setElevation.bind(this));
-      this._elevFormatHandle = pausable(units, 'elevationUnit', this._setElevation.bind(this, view.center));
+      this._initElevation(view, units);
+    } else {
+      watch(view, 'map.ground.layers.length', this._initElevation.bind(this, view, units));
     }
 
     // wire units change
@@ -462,6 +460,19 @@ export default class MeasureViewModel extends Accessor {
         }
       },
     );
+  }
+
+  /**
+   * Intialize elevation.
+   * @param view
+   * @param units
+   */
+  private _initElevation(view: esri.MapView, units: UnitsViewModel): void {
+    this.hasGround = true;
+      this.ground = view.map.ground;
+      this._setElevation(view.center);
+      this._elevCenterHandle = pausable(view, 'center', this._setElevation.bind(this));
+      this._elevFormatHandle = pausable(units, 'elevationUnit', this._setElevation.bind(this, view.center));
   }
 
   /**
