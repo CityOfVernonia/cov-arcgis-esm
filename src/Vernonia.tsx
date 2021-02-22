@@ -42,7 +42,6 @@ const CSS = {
 
   // left and right widget panels
   panel: 'cov-vernonia--panel',
-  panelWidget: 'cov-vernonia--panel--widget',
   actionBarAvatar: 'cov-vernonia--action-bar--avatar',
 
   // content
@@ -294,7 +293,6 @@ export default class Vernonia extends Widget {
         key={KEY++}
         data-widget-id={widget.id}
         hidden=""
-        class={CSS.panelWidget}
         afterCreate={(div: HTMLDivElement) => {
           widget.container = div;
         }}
@@ -324,7 +322,6 @@ export default class Vernonia extends Widget {
           <calcite-avatar
             data-widget-id={accountControl.id}
             onclick={this._panelActionClickEvent.bind(this, panelState)}
-            scale="m"
             full-name={oAuthViewModel.user.fullName}
             username={oAuthViewModel.user.username}
             thumbnail={oAuthViewModel.user.thumbnailUrl}
@@ -338,7 +335,6 @@ export default class Vernonia extends Widget {
           key={KEY++}
           data-widget-id={accountControl.id}
           hidden=""
-          class={CSS.panelWidget}
           afterCreate={(div: HTMLDivElement) => {
             accountControl.container = div;
           }}
@@ -350,7 +346,6 @@ export default class Vernonia extends Widget {
         <calcite-action
           key={KEY++}
           data-widget-id={accountControl.id}
-          data-state="primaryPanelState"
           title="Sign in"
           text="Sign in"
           icon="sign-in"
@@ -445,7 +440,6 @@ export default class Vernonia extends Widget {
           hidden={!menuPanelState.loaded}
           slot="primary-panel"
           position="start"
-          width-scale="m"
           theme="dark"
           collapsed={menuPanelState.collapsed}
         >
@@ -469,7 +463,6 @@ export default class Vernonia extends Widget {
           hidden={!operationalPanelState.loaded}
           slot="primary-panel"
           position="end"
-          width-scale="m"
           collapsed={operationalPanelState.collapsed}
         >
           <calcite-action-bar slot="action-bar">
