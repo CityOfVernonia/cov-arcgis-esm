@@ -2,11 +2,14 @@ import { Point } from '@arcgis/core/geometry';
 
 /**
  * Distance between two points.
- * @param point1 esri.Point
- * @param point2 esri.Point
+ * @param point1 esri.Point | x,y key/value pair
+ * @param point2 esri.Point | x,y key/value pair
  * @returns number
  */
-export const distance = (point1: Point, point2: Point): number => {
+export const distance = (
+  point1: Point | { x: number; y: number },
+  point2: Point | { x: number; y: number },
+): number => {
   const { x: x1, y: y1 } = point1;
   const { x: x2, y: y2 } = point2;
   return Math.sqrt(Math.pow(Math.abs(x1 - x2), 2) + Math.pow(Math.abs(y1 - y2), 2));
