@@ -16,7 +16,7 @@ export const distance = (
 };
 
 /**
- * Point on the line between two points some distance for point one.
+ * Point on the line between two points some distance from point one.
  * @param point1 esri.Point
  * @param point2 esri.Point
  * @param linearDistance number
