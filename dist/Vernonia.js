@@ -1,35 +1,33 @@
-"use strict";
 /**
  * The primary layout for City of Vernonia web mapping applications.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-require("@esri/calcite-components");
+import { __decorate } from "tslib";
+import '@esri/calcite-components';
 /**
  * Base class and support modules.
  */
-const Widget_1 = tslib_1.__importDefault(require("@arcgis/core/widgets/Widget"));
-const widget_1 = require("@arcgis/core/widgets/support/widget");
-const decorators_1 = require("@arcgis/core/core/accessorSupport/decorators");
-const Collection_1 = tslib_1.__importDefault(require("@arcgis/core/core/Collection"));
-const watchUtils_1 = require("@arcgis/core/core/watchUtils");
+import Widget from '@arcgis/core/widgets/Widget';
+import { renderable, tsx } from '@arcgis/core/widgets/support/widget';
+import { property, subclass } from '@arcgis/core/core/accessorSupport/decorators';
+import Collection from '@arcgis/core/core/Collection';
+import { whenOnce } from '@arcgis/core/core/watchUtils';
 // import interact from 'interactjs';
 /**
  * Widget view model.
  */
-const VernoniaViewModel_1 = tslib_1.__importDefault(require("./Vernonia/VernoniaViewModel"));
+import VernoniaViewModel from './Vernonia/VernoniaViewModel';
 /**
  * Vernonia layout support widgets.
  */
-const LoadingScreen_1 = tslib_1.__importDefault(require("./Vernonia/LoadingScreen"));
-const DisclaimerModal_1 = tslib_1.__importDefault(require("./Vernonia/DisclaimerModal"));
-const MapTitle_1 = tslib_1.__importDefault(require("./Vernonia/MapTitle"));
-const AccountControl_1 = tslib_1.__importDefault(require("./Vernonia/AccountControl"));
+import LoadingScreen from './Vernonia/LoadingScreen';
+import DisclaimerModal from './Vernonia/DisclaimerModal';
+import MapTitle from './Vernonia/MapTitle';
+import AccountControl from './Vernonia/AccountControl';
 /**
  * Widgets loaded by the layout.
  */
-const CalciteNavigation_1 = tslib_1.__importDefault(require("./widgets/CalciteNavigation"));
-const ScaleBar_1 = tslib_1.__importDefault(require("@arcgis/core/widgets/ScaleBar"));
+import CalciteNavigation from './widgets/CalciteNavigation';
+import ScaleBar from '@arcgis/core/widgets/ScaleBar';
 const CSS = {
     base: 'cov-vernonia',
     // left and right widget panels
@@ -49,13 +47,13 @@ const DISCLAIMER_OPTIONS = {
     title: 'Disclaimer',
     message: 'There are no warranties, expressed or implied, including the warranty of merchantability or fitness for a particular purpose, accompanying this application.',
 };
-let Vernonia = class Vernonia extends Widget_1.default {
+let Vernonia = class Vernonia extends Widget {
     constructor(properties) {
         super(properties);
         /**
          * View model.
          */
-        this.viewModel = new VernoniaViewModel_1.default();
+        this.viewModel = new VernoniaViewModel();
         this.title = 'Vernonia';
         this.viewTitle = false;
         this.disclaimerOptions = DISCLAIMER_OPTIONS;
@@ -66,25 +64,25 @@ let Vernonia = class Vernonia extends Widget_1.default {
         this.menuPanelState = {
             collapsed: true,
             activeWidgetId: null,
-            actions: new Collection_1.default(),
-            widgets: new Collection_1.default(),
+            actions: new Collection(),
+            widgets: new Collection(),
             loaded: false,
         };
         this.operationalPanelState = {
             collapsed: true,
             activeWidgetId: null,
-            actions: new Collection_1.default(),
-            widgets: new Collection_1.default(),
+            actions: new Collection(),
+            widgets: new Collection(),
             loaded: false,
         };
         this._leadingVisible = false;
         this._trailingVisible = false;
-        this._loadingScreen = new LoadingScreen_1.default({
+        this._loadingScreen = new LoadingScreen({
             title: properties.title || this.title,
         });
         // `view` is a required property but using `whenOnce()` here with an `async` callback allows
         // all the initialization logic to be performed before the widget does any other initializing
-        watchUtils_1.whenOnce(this, 'view', this._initView.bind(this));
+        whenOnce(this, 'view', this._initView.bind(this));
     }
     // postInitialize(): void { }
     /**
@@ -127,8 +125,8 @@ let Vernonia = class Vernonia extends Widget_1.default {
         operationalPanelState.loaded = operationalPanelState.actions.length ? true : false;
         // await this._initResizable();
         // lastly display disclaimer if required and end the loading screen
-        if (_disclaimerOptions.include && !oAuthViewModel?.signedIn && !DisclaimerModal_1.default.isAccepted()) {
-            new DisclaimerModal_1.default({
+        if (_disclaimerOptions.include && !oAuthViewModel?.signedIn && !DisclaimerModal.isAccepted()) {
+            new DisclaimerModal({
                 title: _disclaimerOptions.title,
                 message: _disclaimerOptions.message,
             });
@@ -143,7 +141,7 @@ let Vernonia = class Vernonia extends Widget_1.default {
     async _initUI(view, viewWidgets) {
         const { title, viewTitle, navigationOptions } = this;
         const { ui } = view;
-        this.navigation = new CalciteNavigation_1.default({
+        this.navigation = new CalciteNavigation({
             ...(navigationOptions || {}),
             ...{
                 view,
@@ -152,13 +150,13 @@ let Vernonia = class Vernonia extends Widget_1.default {
         });
         ui.empty('top-left');
         if (viewTitle) {
-            ui.add(new MapTitle_1.default({ title }), 'top-left');
+            ui.add(new MapTitle({ title }), 'top-left');
             view.when().then(() => {
                 document.querySelector('div.esri-ui-top-left.esri-ui-corner').style.top = '-10px';
             });
         }
         ui.add(this.navigation, 'top-left');
-        ui.add(new ScaleBar_1.default({
+        ui.add(new ScaleBar({
             view,
             style: 'ruler',
         }), 'bottom-left');
@@ -176,9 +174,9 @@ let Vernonia = class Vernonia extends Widget_1.default {
         const { actions, widgets } = panelState;
         const { widget, title, icon } = properties;
         // add action
-        actions.add(widget_1.tsx("calcite-action", { key: KEY++, "data-widget-id": widget.id, title: title, text: title, icon: icon, onclick: this._panelActionClickEvent.bind(this, panelState) }));
+        actions.add(tsx("calcite-action", { key: KEY++, "data-widget-id": widget.id, title: title, text: title, icon: icon, onclick: this._panelActionClickEvent.bind(this, panelState) }));
         // add widget
-        widgets.add(widget_1.tsx("div", { key: KEY++, "data-widget-id": widget.id, hidden: "", afterCreate: (div) => {
+        widgets.add(tsx("div", { key: KEY++, "data-widget-id": widget.id, hidden: "", afterCreate: (div) => {
                 widget.container = div;
             } }));
     }
@@ -189,22 +187,22 @@ let Vernonia = class Vernonia extends Widget_1.default {
      */
     async _initAccountControl(oAuthViewModel, panelState) {
         const { actions, widgets } = panelState;
-        const accountControl = new AccountControl_1.default({ oAuthViewModel });
+        const accountControl = new AccountControl({ oAuthViewModel });
         if (oAuthViewModel.signedIn) {
             // OAuthViewModel may still be transacting auth and alaising `user`
             // so wait until there is a servicable user
-            await watchUtils_1.whenOnce(oAuthViewModel, 'user');
+            await whenOnce(oAuthViewModel, 'user');
             // add avatar
-            actions.add(widget_1.tsx("div", { key: KEY++, class: CSS.actionBarAvatar, title: oAuthViewModel.user.fullName },
-                widget_1.tsx("calcite-avatar", { "data-widget-id": accountControl.id, onclick: this._panelActionClickEvent.bind(this, panelState), "full-name": oAuthViewModel.user.fullName, username: oAuthViewModel.user.username, thumbnail: oAuthViewModel.user.thumbnailUrl })), 0);
+            actions.add(tsx("div", { key: KEY++, class: CSS.actionBarAvatar, title: oAuthViewModel.user.fullName },
+                tsx("calcite-avatar", { "data-widget-id": accountControl.id, onclick: this._panelActionClickEvent.bind(this, panelState), "full-name": oAuthViewModel.user.fullName, username: oAuthViewModel.user.username, thumbnail: oAuthViewModel.user.thumbnailUrl })), 0);
             // add account control widget
-            widgets.add(widget_1.tsx("div", { key: KEY++, "data-widget-id": accountControl.id, hidden: "", afterCreate: (div) => {
+            widgets.add(tsx("div", { key: KEY++, "data-widget-id": accountControl.id, hidden: "", afterCreate: (div) => {
                     accountControl.container = div;
                 } }));
         }
         else {
             // add sign in action
-            actions.add(widget_1.tsx("calcite-action", { key: KEY++, "data-widget-id": accountControl.id, title: "Sign in", text: "Sign in", icon: "sign-in", onclick: oAuthViewModel.signIn.bind(oAuthViewModel) }), 0);
+            actions.add(tsx("calcite-action", { key: KEY++, "data-widget-id": accountControl.id, title: "Sign in", text: "Sign in", icon: "sign-in", onclick: oAuthViewModel.signIn.bind(oAuthViewModel) }), 0);
         }
     }
     /**
@@ -277,73 +275,73 @@ let Vernonia = class Vernonia extends Widget_1.default {
             [CSS.contentTrailing]: true,
             [CSS.contentVisible]: _trailingVisible,
         };
-        return (widget_1.tsx("calcite-shell", { class: CSS.base },
-            widget_1.tsx("calcite-shell-panel", { class: CSS.panel, hidden: !menuPanelState.loaded, slot: "primary-panel", position: "start", theme: "dark", collapsed: menuPanelState.collapsed },
-                widget_1.tsx("calcite-action-bar", { slot: "action-bar" }, menuPanelState.loaded ? menuPanelState.actions.toArray() : null),
+        return (tsx("calcite-shell", { class: CSS.base },
+            tsx("calcite-shell-panel", { class: CSS.panel, hidden: !menuPanelState.loaded, slot: "primary-panel", position: "start", theme: "dark", collapsed: menuPanelState.collapsed },
+                tsx("calcite-action-bar", { slot: "action-bar" }, menuPanelState.loaded ? menuPanelState.actions.toArray() : null),
                 menuPanelState.loaded ? menuPanelState.widgets.toArray() : null),
-            widget_1.tsx("div", { class: CSS.content },
-                widget_1.tsx("div", { class: this.classes(leadingStyles) }),
-                widget_1.tsx("div", { class: CSS.contentView }),
-                widget_1.tsx("div", { class: this.classes(trailingStyles) })),
-            widget_1.tsx("calcite-shell-panel", { class: CSS.panel, hidden: !operationalPanelState.loaded, slot: "primary-panel", position: "end", collapsed: operationalPanelState.collapsed },
-                widget_1.tsx("calcite-action-bar", { slot: "action-bar" }, operationalPanelState.loaded ? operationalPanelState.actions.toArray() : null),
+            tsx("div", { class: CSS.content },
+                tsx("div", { class: this.classes(leadingStyles) }),
+                tsx("div", { class: CSS.contentView }),
+                tsx("div", { class: this.classes(trailingStyles) })),
+            tsx("calcite-shell-panel", { class: CSS.panel, hidden: !operationalPanelState.loaded, slot: "primary-panel", position: "end", collapsed: operationalPanelState.collapsed },
+                tsx("calcite-action-bar", { slot: "action-bar" }, operationalPanelState.loaded ? operationalPanelState.actions.toArray() : null),
                 operationalPanelState.loaded ? operationalPanelState.widgets.toArray() : null)));
     }
 };
-tslib_1.__decorate([
-    decorators_1.property({
-        type: VernoniaViewModel_1.default,
+__decorate([
+    property({
+        type: VernoniaViewModel,
     })
 ], Vernonia.prototype, "viewModel", void 0);
-tslib_1.__decorate([
-    decorators_1.property({
+__decorate([
+    property({
         aliasOf: 'viewModel.view',
     })
 ], Vernonia.prototype, "view", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], Vernonia.prototype, "title", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], Vernonia.prototype, "viewTitle", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], Vernonia.prototype, "disclaimerOptions", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], Vernonia.prototype, "navigationOptions", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], Vernonia.prototype, "searchViewModel", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], Vernonia.prototype, "oAuthViewModel", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], Vernonia.prototype, "widgets", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], Vernonia.prototype, "navigation", void 0);
-tslib_1.__decorate([
-    decorators_1.property(),
-    widget_1.renderable()
+__decorate([
+    property(),
+    renderable()
 ], Vernonia.prototype, "menuPanelState", void 0);
-tslib_1.__decorate([
-    decorators_1.property(),
-    widget_1.renderable()
+__decorate([
+    property(),
+    renderable()
 ], Vernonia.prototype, "operationalPanelState", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], Vernonia.prototype, "_loadingScreen", void 0);
-tslib_1.__decorate([
-    decorators_1.property(),
-    widget_1.renderable()
+__decorate([
+    property(),
+    renderable()
 ], Vernonia.prototype, "_leadingVisible", void 0);
-tslib_1.__decorate([
-    decorators_1.property(),
-    widget_1.renderable()
+__decorate([
+    property(),
+    renderable()
 ], Vernonia.prototype, "_trailingVisible", void 0);
-Vernonia = tslib_1.__decorate([
-    decorators_1.subclass('cov.Vernonia')
+Vernonia = __decorate([
+    subclass('cov.Vernonia')
 ], Vernonia);
-exports.default = Vernonia;
+export default Vernonia;

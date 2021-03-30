@@ -1,9 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.noMValueIds = exports.noZValueIds = exports.addZValues = exports.addMValues = void 0;
-const tslib_1 = require("tslib");
-const request_1 = tslib_1.__importDefault(require("@arcgis/core/request"));
-const cogo_1 = require("./cogo");
+import esriRequest from '@arcgis/core/request';
+import { distance as point2PointDistance } from './cogo';
 /**
  * Add m values to a polyline
  * Polyline spatial reference must be source feature service spatial reference
@@ -11,7 +7,7 @@ const cogo_1 = require("./cogo");
  * @param polyline
  * @param startM
  */
-const addMValues = (polyline, startM) => {
+export const addMValues = (polyline, startM) => {
     const { paths } = polyline;
     const path = paths[0];
     let distance = startM || 0;
@@ -24,14 +20,13 @@ const addMValues = (polyline, startM) => {
             // all other m values are aggregate distance
             const previousPoint = path[pointIndex - 1];
             distance =
-                distance + cogo_1.distance({ x: previousPoint[0], y: previousPoint[1] }, { x: point[0], y: point[1] });
+                distance + point2PointDistance({ x: previousPoint[0], y: previousPoint[1] }, { x: point[0], y: point[1] });
             path[pointIndex][3] = distance;
         }
     });
     polyline.paths[0] = path;
     return { polyline, distance };
 };
-exports.addMValues = addMValues;
 /**
  * Add z values to polyline from DEM image service
  * Polyline spatial reference must be image service spatial reference
@@ -40,7 +35,7 @@ exports.addMValues = addMValues;
  * @param imageServiceUrl
  * @returns
  */
-const addZValues = (polyline, imageServiceUrl) => {
+export const addZValues = (polyline, imageServiceUrl) => {
     const { paths } = polyline;
     const path = paths[0];
     let startZ = 0;
@@ -49,7 +44,7 @@ const addZValues = (polyline, imageServiceUrl) => {
     return new Promise((resolve, reject) => {
         // map request for each elevation query for each point
         const requests = path.map((point) => {
-            return request_1.default(imageServiceUrl, {
+            return esriRequest(imageServiceUrl, {
                 query: {
                     geometryType: 'esriGeometryPoint',
                     returnGeometry: false,
@@ -85,7 +80,6 @@ const addZValues = (polyline, imageServiceUrl) => {
         });
     }); // end returned promise
 };
-exports.addZValues = addZValues;
 /**
  * Return array of ids (object or global) of polyline features without z values
  * Also checks for z = 0 as well, so no suited for at or below sea level data
@@ -94,7 +88,7 @@ exports.addZValues = addZValues;
  * @param idField
  * @returns
  */
-const noZValueIds = (features, idField) => {
+export const noZValueIds = (features, idField) => {
     const ids = [];
     features.forEach((feature) => {
         const polyline = feature.geometry;
@@ -107,7 +101,6 @@ const noZValueIds = (features, idField) => {
     });
     return ids;
 };
-exports.noZValueIds = noZValueIds;
 /**
  * Return array of ids (object or global) of polyline features without m values
  * Does not support multi-part geometry
@@ -115,7 +108,7 @@ exports.noZValueIds = noZValueIds;
  * @param idField
  * @returns
  */
-const noMValueIds = (features, idField) => {
+export const noMValueIds = (features, idField) => {
     const ids = [];
     features.forEach((feature) => {
         const polyline = feature.geometry;
@@ -128,4 +121,3 @@ const noMValueIds = (features, idField) => {
     });
     return ids;
 };
-exports.noMValueIds = noMValueIds;

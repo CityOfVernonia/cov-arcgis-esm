@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const Widget_1 = tslib_1.__importDefault(require("@arcgis/core/widgets/Widget"));
-const decorators_1 = require("@arcgis/core/core/accessorSupport/decorators");
-const widget_1 = require("@arcgis/core/widgets/support/widget");
+import { __decorate } from "tslib";
+import Widget from '@arcgis/core/widgets/Widget';
+import { subclass, property } from '@arcgis/core/core/accessorSupport/decorators';
+import { tsx } from '@arcgis/core/widgets/support/widget';
 const CSS = {
     loading: 'cov-vernonia--loading-screen',
     loadingInfo: 'cov-vernonia--loading-screen_info',
@@ -11,7 +9,7 @@ const CSS = {
     loadingCoffee: 'cov-vernonia--loading-screen_coffee',
     loadingBuiltWith: 'cov-vernonia--loading-screen_built-with',
 };
-let LoadingScreen = class LoadingScreen extends Widget_1.default {
+let LoadingScreen = class LoadingScreen extends Widget {
     constructor(properties) {
         super(properties);
         this.title = 'Vernonia';
@@ -34,43 +32,43 @@ let LoadingScreen = class LoadingScreen extends Widget_1.default {
     }
     render() {
         const { title, fadeDelay, _heart, _coffee } = this;
-        return (widget_1.tsx("div", { class: CSS.loading, style: `transition: opacity ${fadeDelay}s;` },
-            widget_1.tsx("div", { class: CSS.loadingInfo },
-                widget_1.tsx("p", null,
+        return (tsx("div", { class: CSS.loading, style: `transition: opacity ${fadeDelay}s;` },
+            tsx("div", { class: CSS.loadingInfo },
+                tsx("p", null,
                     "Loading ",
                     title),
-                widget_1.tsx("calcite-progress", { type: "indeterminate" }),
-                widget_1.tsx("p", null,
+                tsx("calcite-progress", { type: "indeterminate" }),
+                tsx("p", null,
                     "Copyright \u00A9 ",
                     new Date().getFullYear(),
                     " City of Vernonia"),
-                widget_1.tsx("p", null,
-                    widget_1.tsx("span", null, "Made with"),
-                    widget_1.tsx("svg", { class: CSS.loadingHeart, "aria-hidden": "true", focusable: "false", role: "img", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512" },
-                        widget_1.tsx("path", { fill: "currentColor", d: _heart })),
-                    widget_1.tsx("span", null, "and"),
-                    widget_1.tsx("svg", { class: CSS.loadingCoffee, "aria-hidden": "true", focusable: "false", role: "img", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512" },
-                        widget_1.tsx("path", { fill: "currentColor", d: _coffee })),
-                    widget_1.tsx("span", null, "in Vernonia, Oregon"))),
-            widget_1.tsx("p", { class: CSS.loadingBuiltWith }, "Built with Esri's JavaScript API and Calcite")));
+                tsx("p", null,
+                    tsx("span", null, "Made with"),
+                    tsx("svg", { class: CSS.loadingHeart, "aria-hidden": "true", focusable: "false", role: "img", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512" },
+                        tsx("path", { fill: "currentColor", d: _heart })),
+                    tsx("span", null, "and"),
+                    tsx("svg", { class: CSS.loadingCoffee, "aria-hidden": "true", focusable: "false", role: "img", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 640 512" },
+                        tsx("path", { fill: "currentColor", d: _coffee })),
+                    tsx("span", null, "in Vernonia, Oregon"))),
+            tsx("p", { class: CSS.loadingBuiltWith }, "Built with Esri's JavaScript API and Calcite")));
     }
 };
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], LoadingScreen.prototype, "title", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], LoadingScreen.prototype, "delay", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], LoadingScreen.prototype, "fadeDelay", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], LoadingScreen.prototype, "_heart", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], LoadingScreen.prototype, "_coffee", void 0);
-LoadingScreen = tslib_1.__decorate([
-    decorators_1.subclass('cov.Vernonia.LoadingScreen')
+LoadingScreen = __decorate([
+    subclass('cov.Vernonia.LoadingScreen')
 ], LoadingScreen);
-exports.default = LoadingScreen;
+export default LoadingScreen;

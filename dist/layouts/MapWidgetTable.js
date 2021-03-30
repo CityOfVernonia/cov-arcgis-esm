@@ -1,11 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const decorators_1 = require("@arcgis/core/core/accessorSupport/decorators");
-const watchUtils_1 = require("@arcgis/core/core/watchUtils");
-const widget_1 = require("@arcgis/core/widgets/support/widget");
-const Widget_1 = tslib_1.__importDefault(require("@arcgis/core/widgets/Widget"));
-const interactjs_1 = tslib_1.__importDefault(require("interactjs"));
+import { __decorate } from "tslib";
+import { property, subclass } from '@arcgis/core/core/accessorSupport/decorators';
+import { whenOnce } from '@arcgis/core/core/watchUtils';
+import { tsx } from '@arcgis/core/widgets/support/widget';
+import Widget from '@arcgis/core/widgets/Widget';
+import interact from 'interactjs';
 const CSS = {
     base: 'cov-map-table-widget',
     topLeft: 'cov-map-table-widget--top-left',
@@ -15,10 +13,10 @@ const CSS = {
     widget: 'cov-map-table-widget--widget',
     table: 'cov-map-table-widget--table',
 };
-let MapWidgetTable = class MapWidgetTable extends Widget_1.default {
+let MapWidgetTable = class MapWidgetTable extends Widget {
     constructor(properties) {
         super(properties);
-        watchUtils_1.whenOnce(this, 'view', this._init.bind(this));
+        whenOnce(this, 'view', this._init.bind(this));
     }
     async _init(view) {
         const { widget, featureTable } = this;
@@ -32,7 +30,7 @@ let MapWidgetTable = class MapWidgetTable extends Widget_1.default {
         const topLeft = document.querySelector(`div[class="${CSS.topLeft}"]`);
         const topRight = document.querySelector(`div[class="${CSS.topRight}"]`);
         const bottom = document.querySelector(`div[class="${CSS.bottom}"]`);
-        interactjs_1.default(topLeft).resizable({
+        interact(topLeft).resizable({
             edges: {
                 top: false,
                 right: true,
@@ -51,7 +49,7 @@ let MapWidgetTable = class MapWidgetTable extends Widget_1.default {
                 },
             },
         });
-        interactjs_1.default(bottom).resizable({
+        interact(bottom).resizable({
             edges: {
                 top: true,
                 right: false,
@@ -73,25 +71,25 @@ let MapWidgetTable = class MapWidgetTable extends Widget_1.default {
         });
     }
     render() {
-        return (widget_1.tsx("div", { class: CSS.base },
-            widget_1.tsx("div", { class: CSS.topLeft },
-                widget_1.tsx("div", { class: CSS.view })),
-            widget_1.tsx("div", { class: CSS.topRight },
-                widget_1.tsx("div", { class: CSS.widget })),
-            widget_1.tsx("div", { class: CSS.bottom },
-                widget_1.tsx("div", { class: CSS.table }))));
+        return (tsx("div", { class: CSS.base },
+            tsx("div", { class: CSS.topLeft },
+                tsx("div", { class: CSS.view })),
+            tsx("div", { class: CSS.topRight },
+                tsx("div", { class: CSS.widget })),
+            tsx("div", { class: CSS.bottom },
+                tsx("div", { class: CSS.table }))));
     }
 };
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MapWidgetTable.prototype, "view", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MapWidgetTable.prototype, "featureTable", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MapWidgetTable.prototype, "widget", void 0);
-MapWidgetTable = tslib_1.__decorate([
-    decorators_1.subclass('cov.layouts.MapWidgetTable')
+MapWidgetTable = __decorate([
+    subclass('cov.layouts.MapWidgetTable')
 ], MapWidgetTable);
-exports.default = MapWidgetTable;
+export default MapWidgetTable;

@@ -1,16 +1,14 @@
-"use strict";
 /**
  * A view model for handling OAuth and signing in and out of applications.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const Accessor_1 = tslib_1.__importDefault(require("@arcgis/core/core/Accessor"));
-const decorators_1 = require("@arcgis/core/core/accessorSupport/decorators");
-const IdentityManager_1 = tslib_1.__importDefault(require("@arcgis/core/identity/IdentityManager"));
-const Portal_1 = tslib_1.__importDefault(require("@arcgis/core/portal/Portal"));
-const Error_1 = tslib_1.__importDefault(require("@arcgis/core/core/Error"));
+import { __decorate } from "tslib";
+import Accessor from '@arcgis/core/core/Accessor';
+import { property, subclass } from '@arcgis/core/core/accessorSupport/decorators';
+import esriId from '@arcgis/core/identity/IdentityManager';
+import Portal from '@arcgis/core/portal/Portal';
+import Error from '@arcgis/core/core/Error';
 const LS_CRED = 'jsapiauthcred';
-let OAuthViewModel = class OAuthViewModel extends Accessor_1.default {
+let OAuthViewModel = class OAuthViewModel extends Accessor {
     constructor() {
         super(...arguments);
         /**
@@ -25,15 +23,15 @@ let OAuthViewModel = class OAuthViewModel extends Accessor_1.default {
      */
     load() {
         const { portal, oAuthInfo } = this;
-        IdentityManager_1.default.registerOAuthInfos([oAuthInfo]);
+        esriId.registerOAuthInfos([oAuthInfo]);
         // set `oAuthViewModel` on esriId to access auth, user, etc
         // via `esriId` in other modules and widgets
         // @ts-ignore
-        IdentityManager_1.default['oAuthViewModel'] = this;
+        esriId['oAuthViewModel'] = this;
         return new Promise((resolve, reject) => {
             if (portal.loaded) {
                 // check for sign in
-                IdentityManager_1.default
+                esriId
                     .checkSignInStatus(portal.url)
                     .then((credential) => {
                     // complete successful sign in
@@ -52,13 +50,13 @@ let OAuthViewModel = class OAuthViewModel extends Accessor_1.default {
                                 return;
                             }
                             // register token
-                            IdentityManager_1.default.registerToken(cred);
+                            esriId.registerToken(cred);
                             // check for sign in
-                            IdentityManager_1.default
+                            esriId
                                 .checkSignInStatus(portal.url)
                                 .then(async (credential) => {
                                 // replace portal instance
-                                this.portal = new Portal_1.default();
+                                this.portal = new Portal();
                                 await this.portal.load();
                                 // complete successful sign in
                                 this._completeSignIn(credential, resolve);
@@ -79,7 +77,7 @@ let OAuthViewModel = class OAuthViewModel extends Accessor_1.default {
             }
             else {
                 // reject if portal is not loaded
-                reject(new Error_1.default('OAuthViewModelLoadError', 'Portal instance must be loaded before loading OAuthViewModel instance.'));
+                reject(new Error('OAuthViewModelLoadError', 'Portal instance must be loaded before loading OAuthViewModel instance.'));
             }
         });
     }
@@ -110,9 +108,9 @@ let OAuthViewModel = class OAuthViewModel extends Accessor_1.default {
      */
     signIn() {
         const url = this.signInUrl || `${this.portal.url}/sharing/rest`;
-        IdentityManager_1.default
+        esriId
             // @ts-ignore
-            .oAuthSignIn(url, IdentityManager_1.default.findServerInfo(url), this.oAuthInfo, {
+            .oAuthSignIn(url, esriId.findServerInfo(url), this.oAuthInfo, {
             oAuthPopupConfirmation: false,
             signal: new AbortController().signal,
         })
@@ -127,36 +125,36 @@ let OAuthViewModel = class OAuthViewModel extends Accessor_1.default {
      * Sign out of the application.
      */
     signOut() {
-        IdentityManager_1.default.destroyCredentials();
+        esriId.destroyCredentials();
         localStorage.removeItem(LS_CRED);
         window.location.reload();
     }
 };
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], OAuthViewModel.prototype, "portal", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], OAuthViewModel.prototype, "oAuthInfo", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], OAuthViewModel.prototype, "signInUrl", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], OAuthViewModel.prototype, "credential", void 0);
-tslib_1.__decorate([
-    decorators_1.property({ aliasOf: 'portal.user' })
+__decorate([
+    property({ aliasOf: 'portal.user' })
 ], OAuthViewModel.prototype, "user", void 0);
-tslib_1.__decorate([
-    decorators_1.property({ aliasOf: 'user.fullName' })
+__decorate([
+    property({ aliasOf: 'user.fullName' })
 ], OAuthViewModel.prototype, "name", void 0);
-tslib_1.__decorate([
-    decorators_1.property({ aliasOf: 'user.username' })
+__decorate([
+    property({ aliasOf: 'user.username' })
 ], OAuthViewModel.prototype, "username", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], OAuthViewModel.prototype, "signedIn", void 0);
-OAuthViewModel = tslib_1.__decorate([
-    decorators_1.subclass('cov.viewModels.OAuthViewModel')
+OAuthViewModel = __decorate([
+    subclass('cov.viewModels.OAuthViewModel')
 ], OAuthViewModel);
-exports.default = OAuthViewModel;
+export default OAuthViewModel;

@@ -1,13 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const Widget_1 = tslib_1.__importDefault(require("@arcgis/core/widgets/Widget"));
-const decorators_1 = require("@arcgis/core/core/accessorSupport/decorators");
-const widget_1 = require("@arcgis/core/widgets/support/widget");
-const Cookies = tslib_1.__importStar(require("js-cookie"));
+import { __decorate } from "tslib";
+import Widget from '@arcgis/core/widgets/Widget';
+import { property, subclass } from '@arcgis/core/core/accessorSupport/decorators';
+import { tsx } from '@arcgis/core/widgets/support/widget';
+import * as Cookies from 'js-cookie';
 const COOKIE_NAME = encodeURIComponent(location.origin + location.pathname);
 const COOKIE_VALUE = 'accepted';
-let DisclaimerModal = class DisclaimerModal extends Widget_1.default {
+let DisclaimerModal = class DisclaimerModal extends Widget {
     constructor(properties) {
         super(properties);
         this.title = 'Disclaimer';
@@ -30,23 +28,23 @@ let DisclaimerModal = class DisclaimerModal extends Widget_1.default {
     }
     render() {
         const { id, _active, title, message } = this;
-        return (widget_1.tsx("div", null,
-            widget_1.tsx("calcite-modal", { width: "s", "aria-labelledby": `modal_${id}`, active: _active, "disable-close-button": "", "disable-escape": "" },
-                widget_1.tsx("h3", { slot: "header", id: `modal_${id}` }, title),
-                widget_1.tsx("div", { slot: "content" }, message),
-                widget_1.tsx("calcite-button", { slot: "primary", onclick: this._clickEvent.bind(this) }, "I agree"))));
+        return (tsx("div", null,
+            tsx("calcite-modal", { width: "s", "aria-labelledby": `modal_${id}`, active: _active, "disable-close-button": "", "disable-escape": "" },
+                tsx("h3", { slot: "header", id: `modal_${id}` }, title),
+                tsx("div", { slot: "content" }, message),
+                tsx("calcite-button", { slot: "primary", onclick: this._clickEvent.bind(this) }, "I agree"))));
     }
 };
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], DisclaimerModal.prototype, "title", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], DisclaimerModal.prototype, "message", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], DisclaimerModal.prototype, "_active", void 0);
-DisclaimerModal = tslib_1.__decorate([
-    decorators_1.subclass('cov.Vernonia.DisclaimerModal')
+DisclaimerModal = __decorate([
+    subclass('cov.Vernonia.DisclaimerModal')
 ], DisclaimerModal);
-exports.default = DisclaimerModal;
+export default DisclaimerModal;

@@ -1,21 +1,19 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const decorators_1 = require("@arcgis/core/core/accessorSupport/decorators");
-const watchUtils_1 = require("@arcgis/core/core/watchUtils");
-const Accessor_1 = tslib_1.__importDefault(require("@arcgis/core/core/Accessor"));
-const UnitsViewModel_1 = tslib_1.__importDefault(require("./UnitsViewModel"));
-const Draw_1 = tslib_1.__importDefault(require("@arcgis/core/views/draw/Draw"));
-const Graphic_1 = tslib_1.__importDefault(require("@arcgis/core/Graphic"));
-const GraphicsLayer_1 = tslib_1.__importDefault(require("@arcgis/core/layers/GraphicsLayer"));
-const Color_1 = tslib_1.__importDefault(require("@arcgis/core/Color"));
-const coordinateFormatter_1 = require("@arcgis/core/geometry/coordinateFormatter");
-const geometryEngine_1 = require("@arcgis/core/geometry/geometryEngine");
-const webMercatorUtils_1 = require("@arcgis/core/geometry/support/webMercatorUtils");
-const geometry_1 = require("@arcgis/core/geometry");
-const symbols_1 = require("@arcgis/core/symbols");
-const cogo_1 = require("./../support/cogo");
-let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
+import { __decorate } from "tslib";
+import { property, subclass } from '@arcgis/core/core/accessorSupport/decorators';
+import { watch, whenOnce, pausable } from '@arcgis/core/core/watchUtils';
+import Accessor from '@arcgis/core/core/Accessor';
+import UnitsViewModel from './UnitsViewModel';
+import Draw from '@arcgis/core/views/draw/Draw';
+import Graphic from '@arcgis/core/Graphic';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import Color from '@arcgis/core/Color';
+import { load as coordinateFormatterLoad, toLatitudeLongitude } from '@arcgis/core/geometry/coordinateFormatter';
+import { geodesicArea, geodesicLength, simplify } from '@arcgis/core/geometry/geometryEngine';
+import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils';
+import { Point, Polygon, Polyline } from '@arcgis/core/geometry';
+import { SimpleFillSymbol, SimpleLineSymbol, SimpleMarkerSymbol, TextSymbol } from '@arcgis/core/symbols';
+import { midpoint } from './../support/cogo';
+let MeasureViewModel = class MeasureViewModel extends Accessor {
     constructor(properties) {
         super(properties);
         this.showText = true;
@@ -30,12 +28,12 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
             y: 0,
             z: 0,
         };
-        this.units = new UnitsViewModel_1.default();
-        this.draw = new Draw_1.default();
-        this.layer = new GraphicsLayer_1.default({
+        this.units = new UnitsViewModel();
+        this.draw = new Draw();
+        this.layer = new GraphicsLayer({
             listMode: 'hide',
         });
-        watchUtils_1.whenOnce(this, 'view', this._init.bind(this));
+        whenOnce(this, 'view', this._init.bind(this));
     }
     /**
      * Clear any graphics, resume paused handles and reset state.
@@ -71,7 +69,7 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
         });
         view.focus();
         action.on(['vertex-add', 'cursor-update', 'vertex-remove', 'draw-complete'], (evt) => {
-            const polyline = new geometry_1.Polyline({
+            const polyline = new Polyline({
                 paths: evt.vertices,
                 spatialReference,
             });
@@ -84,11 +82,11 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
     _length(polyline) {
         const { layer, _color, units: { lengthUnit }, showText, } = this;
         layer.removeAll();
-        let length = geometryEngine_1.geodesicLength(polyline, lengthUnit);
+        let length = geodesicLength(polyline, lengthUnit);
         if (length < 0) {
-            const simplifiedPolyline = geometryEngine_1.simplify(polyline);
+            const simplifiedPolyline = simplify(polyline);
             if (simplifiedPolyline) {
-                length = geometryEngine_1.geodesicLength(simplifiedPolyline, lengthUnit);
+                length = geodesicLength(simplifiedPolyline, lengthUnit);
             }
         }
         length = Number(length.toFixed(2));
@@ -98,18 +96,18 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
         };
         // add polyline graphics
         layer.addMany([
-            new Graphic_1.default({
+            new Graphic({
                 geometry: polyline,
-                symbol: new symbols_1.SimpleLineSymbol({
+                symbol: new SimpleLineSymbol({
                     cap: 'butt',
                     join: 'round',
                     color: _color,
                     width: 2,
                 }),
             }),
-            new Graphic_1.default({
+            new Graphic({
                 geometry: polyline,
-                symbol: new symbols_1.SimpleLineSymbol({
+                symbol: new SimpleLineSymbol({
                     style: 'dash',
                     cap: 'butt',
                     join: 'round',
@@ -122,7 +120,7 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
         polyline.paths[0].forEach(this._addMarker.bind(this));
         // add text graphic
         if (showText) {
-            this._addText(cogo_1.midpoint(polyline), `${this.state.length.toLocaleString()} ${lengthUnit}`);
+            this._addText(midpoint(polyline), `${this.state.length.toLocaleString()} ${lengthUnit}`);
         }
     }
     /**
@@ -137,7 +135,7 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
         });
         view.focus();
         action.on(['vertex-add', 'cursor-update', 'vertex-remove', 'draw-complete'], (evt) => {
-            const polygon = new geometry_1.Polygon({
+            const polygon = new Polygon({
                 rings: evt.vertices,
                 spatialReference,
             });
@@ -150,23 +148,23 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
     _area(polygon) {
         const { layer, _color, _fillColor, units: { lengthUnit, areaUnit }, showText, } = this;
         layer.removeAll();
-        let area = geometryEngine_1.geodesicArea(polygon, areaUnit);
+        let area = geodesicArea(polygon, areaUnit);
         if (area < 0) {
-            const simplifiedPolygon = geometryEngine_1.simplify(polygon);
+            const simplifiedPolygon = simplify(polygon);
             if (simplifiedPolygon) {
-                area = geometryEngine_1.geodesicArea(simplifiedPolygon, areaUnit);
+                area = geodesicArea(simplifiedPolygon, areaUnit);
             }
         }
-        const length = geometryEngine_1.geodesicLength(polygon, lengthUnit);
+        const length = geodesicLength(polygon, lengthUnit);
         this.state = {
             ...this.state,
             length,
             area,
         };
         layer.addMany([
-            new Graphic_1.default({
+            new Graphic({
                 geometry: polygon,
-                symbol: new symbols_1.SimpleFillSymbol({
+                symbol: new SimpleFillSymbol({
                     color: _fillColor,
                     outline: {
                         cap: 'butt',
@@ -176,9 +174,9 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
                     },
                 }),
             }),
-            new Graphic_1.default({
+            new Graphic({
                 geometry: polygon,
-                symbol: new symbols_1.SimpleFillSymbol({
+                symbol: new SimpleFillSymbol({
                     color: [0, 0, 0, 0],
                     outline: {
                         style: 'dash',
@@ -210,7 +208,7 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
         view.focus();
         action.on(['cursor-update', 'draw-complete'], (evt) => {
             const [x, y] = evt.coordinates;
-            const point = new geometry_1.Point({
+            const point = new Point({
                 x,
                 y,
                 spatialReference,
@@ -246,7 +244,7 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
         view.focus();
         action.on(['cursor-update', 'draw-complete'], (evt) => {
             const [x, y] = evt.coordinates;
-            const point = new geometry_1.Point({
+            const point = new Point({
                 x,
                 y,
                 spatialReference,
@@ -276,22 +274,22 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
         // initialize draw and colors
         draw.view = view;
         view.map.add(layer);
-        this._color = new Color_1.default(color);
-        this._fillColor = new Color_1.default(fillColor);
+        this._color = new Color(color);
+        this._fillColor = new Color(fillColor);
         // initialize coordinates
-        coordinateFormatter_1.load();
+        coordinateFormatterLoad();
         this._setLocation(view.center);
-        this._coordCenterHandle = watchUtils_1.pausable(view, 'center', this._setLocation.bind(this));
-        this._coordFormatHandle = watchUtils_1.pausable(units, 'locationUnit', this._setLocation.bind(this, view.center));
+        this._coordCenterHandle = pausable(view, 'center', this._setLocation.bind(this));
+        this._coordFormatHandle = pausable(units, 'locationUnit', this._setLocation.bind(this, view.center));
         // initialize elevation
         if (view.map.ground.layers.length) {
             this._initElevation(view, units);
         }
         else {
-            watchUtils_1.watch(view, 'map.ground.layers.length', this._initElevation.bind(this, view, units));
+            watch(view, 'map.ground.layers.length', this._initElevation.bind(this, view, units));
         }
         // wire units change
-        watchUtils_1.watch(units, ['lengthUnit', 'areaUnit', 'locationUnit', 'elevationUnit'], (_value, _old, updated) => {
+        watch(units, ['lengthUnit', 'areaUnit', 'locationUnit', 'elevationUnit'], (_value, _old, updated) => {
             const { state: { action }, layer: { graphics }, } = this;
             let graphic;
             switch (updated) {
@@ -341,8 +339,8 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
         this.hasGround = true;
         this.ground = view.map.ground;
         this._setElevation(view.center);
-        this._elevCenterHandle = watchUtils_1.pausable(view, 'center', this._setElevation.bind(this));
-        this._elevFormatHandle = watchUtils_1.pausable(units, 'elevationUnit', this._setElevation.bind(this, view.center));
+        this._elevCenterHandle = pausable(view, 'center', this._setElevation.bind(this));
+        this._elevFormatHandle = pausable(units, 'elevationUnit', this._setElevation.bind(this, view.center));
     }
     /**
      * Update state<x, y>.
@@ -358,7 +356,7 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
             };
         }
         else {
-            const dms = coordinateFormatter_1.toLatitudeLongitude(webMercatorUtils_1.webMercatorToGeographic(point), 'dms', 2);
+            const dms = toLatitudeLongitude(webMercatorToGeographic(point), 'dms', 2);
             const index = dms.indexOf('N') !== -1 ? dms.indexOf('N') : dms.indexOf('S');
             this.state = {
                 ...this.state,
@@ -392,9 +390,9 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
     _addMarker(coordinates) {
         const { view: { spatialReference }, layer, _color, } = this;
         const [x, y] = coordinates;
-        const graphic = new Graphic_1.default({
-            geometry: new geometry_1.Point({ x, y, spatialReference }),
-            symbol: new symbols_1.SimpleMarkerSymbol({
+        const graphic = new Graphic({
+            geometry: new Point({ x, y, spatialReference }),
+            symbol: new SimpleMarkerSymbol({
                 style: 'x',
                 size: 8,
                 outline: {
@@ -407,9 +405,9 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
     }
     _addText(geometry, text) {
         const { layer, _color } = this;
-        layer.add(new Graphic_1.default({
+        layer.add(new Graphic({
             geometry,
-            symbol: new symbols_1.TextSymbol({
+            symbol: new TextSymbol({
                 text,
                 color: _color,
                 haloColor: 'white',
@@ -422,57 +420,57 @@ let MeasureViewModel = class MeasureViewModel extends Accessor_1.default {
         }));
     }
 };
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "view", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "showText", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "color", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "fillColor", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "hasGround", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "state", void 0);
-tslib_1.__decorate([
-    decorators_1.property({
-        type: UnitsViewModel_1.default,
+__decorate([
+    property({
+        type: UnitsViewModel,
     })
 ], MeasureViewModel.prototype, "units", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "draw", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "ground", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "layer", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "_coordCenterHandle", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "_coordFormatHandle", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "_elevCenterHandle", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "_elevFormatHandle", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "_color", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], MeasureViewModel.prototype, "_fillColor", void 0);
-MeasureViewModel = tslib_1.__decorate([
-    decorators_1.subclass('cov.viewModels.MeasureViewModel')
+MeasureViewModel = __decorate([
+    subclass('cov.viewModels.MeasureViewModel')
 ], MeasureViewModel);
-exports.default = MeasureViewModel;
+export default MeasureViewModel;

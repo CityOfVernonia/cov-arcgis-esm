@@ -1,14 +1,12 @@
-"use strict";
 /**
  * A view model for managing location, length, area and elevation units and providing utility methods for returning unit <select>s.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const Accessor_1 = tslib_1.__importDefault(require("@arcgis/core/core/Accessor"));
-const decorators_1 = require("@arcgis/core/core/accessorSupport/decorators");
-const widget_1 = require("@arcgis/core/widgets/support/widget");
+import { __decorate } from "tslib";
+import Accessor from '@arcgis/core/core/Accessor';
+import { property, subclass } from '@arcgis/core/core/accessorSupport/decorators';
+import { tsx } from '@arcgis/core/widgets/support/widget';
 let KEY = 0;
-let UnitsViewModel = class UnitsViewModel extends Accessor_1.default {
+let UnitsViewModel = class UnitsViewModel extends Accessor {
     constructor(properties) {
         super(properties);
         /**
@@ -79,7 +77,7 @@ let UnitsViewModel = class UnitsViewModel extends Accessor_1.default {
      * @param title <select> `title` attribute
      */
     locationSelect(name, title) {
-        return (widget_1.tsx("select", { class: this.selectClass, name: name || '', title: title || '', bind: this, onchange: (evt) => {
+        return (tsx("select", { class: this.selectClass, name: name || '', title: title || '', bind: this, onchange: (evt) => {
                 this.locationUnit = evt.target.value;
             } }, this._createUnitOptions(this.locationUnits, this.locationUnit)));
     }
@@ -90,7 +88,7 @@ let UnitsViewModel = class UnitsViewModel extends Accessor_1.default {
      * @param title <select> `title` attribute
      */
     lengthSelect(name, title) {
-        return (widget_1.tsx("select", { class: this.selectClass, name: name || '', title: title || '', bind: this, onchange: (evt) => {
+        return (tsx("select", { class: this.selectClass, name: name || '', title: title || '', bind: this, onchange: (evt) => {
                 this.lengthUnit = evt.target.value;
             } }, this._createUnitOptions(this.lengthUnits, this.lengthUnit.toString())));
     }
@@ -101,7 +99,7 @@ let UnitsViewModel = class UnitsViewModel extends Accessor_1.default {
      * @param title <select> `title` attribute
      */
     areaSelect(name, title) {
-        return (widget_1.tsx("select", { class: this.selectClass, name: name || '', title: title || '', bind: this, onchange: (evt) => {
+        return (tsx("select", { class: this.selectClass, name: name || '', title: title || '', bind: this, onchange: (evt) => {
                 this.areaUnit = evt.target.value;
             } }, this._createUnitOptions(this.areaUnits, this.areaUnit.toString())));
     }
@@ -112,7 +110,7 @@ let UnitsViewModel = class UnitsViewModel extends Accessor_1.default {
      * @param title <select> `title` attribute
      */
     elevationSelect(name, title) {
-        return (widget_1.tsx("select", { class: this.selectClass, name: name || '', title: title || '', bind: this, onchange: (evt) => {
+        return (tsx("select", { class: this.selectClass, name: name || '', title: title || '', bind: this, onchange: (evt) => {
                 this.elevationUnit = evt.target.value;
             } }, this._createUnitOptions(this.elevationUnits, this.elevationUnit)));
     }
@@ -120,39 +118,39 @@ let UnitsViewModel = class UnitsViewModel extends Accessor_1.default {
     _createUnitOptions(units, defaultUnit) {
         const options = [];
         for (const unit in units) {
-            options.push(widget_1.tsx("option", { key: KEY++, value: unit, selected: unit === defaultUnit }, units[unit]));
+            options.push(tsx("option", { key: KEY++, value: unit, selected: unit === defaultUnit }, units[unit]));
         }
         return options;
     }
 };
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], UnitsViewModel.prototype, "selectClass", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], UnitsViewModel.prototype, "locationUnit", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], UnitsViewModel.prototype, "locationUnits", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], UnitsViewModel.prototype, "lengthUnit", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], UnitsViewModel.prototype, "lengthUnits", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], UnitsViewModel.prototype, "areaUnit", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], UnitsViewModel.prototype, "areaUnits", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], UnitsViewModel.prototype, "elevationUnit", void 0);
-tslib_1.__decorate([
-    decorators_1.property()
+__decorate([
+    property()
 ], UnitsViewModel.prototype, "elevationUnits", void 0);
-UnitsViewModel = tslib_1.__decorate([
-    decorators_1.subclass('cov.viewModels.UnitsViewModel')
+UnitsViewModel = __decorate([
+    subclass('cov.viewModels.UnitsViewModel')
 ], UnitsViewModel);
-exports.default = UnitsViewModel;
+export default UnitsViewModel;
