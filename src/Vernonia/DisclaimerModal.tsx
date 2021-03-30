@@ -1,7 +1,7 @@
 import Widget from '@arcgis/core/widgets/Widget';
 import { property, subclass } from '@arcgis/core/core/accessorSupport/decorators';
 import { tsx } from '@arcgis/core/widgets/support/widget';
-import Cookies from 'js-cookie';
+import * as Cookies from 'js-cookie';
 
 interface DisclaimerModalProperties extends esri.WidgetProperties {
   title?: string;

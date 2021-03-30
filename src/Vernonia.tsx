@@ -34,7 +34,7 @@ import AccountControl from './Vernonia/AccountControl';
 /**
  * Widgets loaded by the layout.
  */
-import CalciteNavigation from 'cov/widgets/CalciteNavigation';
+import CalciteNavigation from './widgets/CalciteNavigation';
 import ScaleBar from '@arcgis/core/widgets/ScaleBar';
 
 const CSS = {

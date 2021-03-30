@@ -40,9 +40,9 @@ export const addMValues = (polyline: esri.Polyline, startM?: number): { polyline
  * Add z values to polyline from DEM image service
  * Polyline spatial reference must be image service spatial reference
  * Does not support multi-part geometry
- * @param polyline 
- * @param imageServiceUrl 
- * @returns 
+ * @param polyline
+ * @param imageServiceUrl
+ * @returns
  */
 export const addZValues = (
   polyline: esri.Polyline,
@@ -106,9 +106,9 @@ export const addZValues = (
  * Return array of ids (object or global) of polyline features without z values
  * Also checks for z = 0 as well, so no suited for at or below sea level data
  * Does not support multi-part geometry
- * @param features 
- * @param idField 
- * @returns 
+ * @param features
+ * @param idField
+ * @returns
  */
 export const noZValueIds = (features: esri.Graphic[], idField: string): string[] => {
   const ids: string[] = [];
@@ -130,9 +130,9 @@ export const noZValueIds = (features: esri.Graphic[], idField: string): string[]
 /**
  * Return array of ids (object or global) of polyline features without m values
  * Does not support multi-part geometry
- * @param features 
- * @param idField 
- * @returns 
+ * @param features
+ * @param idField
+ * @returns
  */
 export const noMValueIds = (features: esri.Graphic[], idField: string): string[] => {
   const ids: string[] = [];

@@ -23,7 +23,11 @@
     "js-cookie"
   ],
   "include": [
-    "src/**/*",
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/__mocks__",
+    "**/*.spec.ts"
   ],
   "files": [
     "src/interfaces.d.ts"
