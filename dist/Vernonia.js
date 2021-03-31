@@ -32,6 +32,7 @@ const CSS = {
     base: 'cov-vernonia',
     // left and right widget panels
     panel: 'cov-vernonia--panel',
+    panelWidget: 'cov-vernonia--panel--widget',
     actionBarAvatar: 'cov-vernonia--action-bar--avatar',
     // content
     content: 'cov-vernonia--content',
@@ -176,7 +177,7 @@ let Vernonia = class Vernonia extends Widget {
         // add action
         actions.add(tsx("calcite-action", { key: KEY++, "data-widget-id": widget.id, title: title, text: title, icon: icon, onclick: this._panelActionClickEvent.bind(this, panelState) }));
         // add widget
-        widgets.add(tsx("div", { key: KEY++, "data-widget-id": widget.id, hidden: "", afterCreate: (div) => {
+        widgets.add(tsx("div", { key: KEY++, class: CSS.panelWidget, "data-widget-id": widget.id, hidden: "", afterCreate: (div) => {
                 widget.container = div;
             } }));
     }

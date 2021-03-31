@@ -23,6 +23,12 @@
   }
 }
 
+.cov-vernonia--panel--widget {
+  &[hidden] {
+    display: none;
+  }
+}
+
 /**
  * Action bar avatar for account control widget.
  */

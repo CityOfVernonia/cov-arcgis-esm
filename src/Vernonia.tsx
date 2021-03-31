@@ -42,6 +42,7 @@ const CSS = {
 
   // left and right widget panels
   panel: 'cov-vernonia--panel',
+  panelWidget: 'cov-vernonia--panel--widget',
   actionBarAvatar: 'cov-vernonia--action-bar--avatar',
 
   // content
@@ -291,6 +292,7 @@ export default class Vernonia extends Widget {
     widgets.add(
       <div
         key={KEY++}
+        class={CSS.panelWidget}
         data-widget-id={widget.id}
         hidden=""
         afterCreate={(div: HTMLDivElement) => {
