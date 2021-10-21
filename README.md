@@ -1,3 +1,9 @@
+# Project Archived
+
+See https://github.com/CityOfVernonia/core.
+
+***
+
 # cov-arcgis-esm
 
 [![npm version][npm-img]][npm-url]
